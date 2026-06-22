@@ -1,0 +1,75 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/home/Hero.astro';
+import ServicesGrid from '@components/home/ServicesGrid.astro';
+import CaseStudyHighlight from '@components/home/CaseStudyHighlight.astro';
+import Numbers from '@components/home/Numbers.astro';
+import Team from '@components/home/Team.astro';
+import BlogRecent from '@components/home/BlogRecent.astro';
+import TrustBar from '@components/home/TrustBar.astro';
+import FinalCTA from '@components/home/FinalCTA.astro';
+
+// Service structured data for SEO
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': 'https://greenlock.tech/#services',
+  name: 'GreenLock Cybersecurity',
+  url: 'https://greenlock.tech',
+  provider: { '@id': 'https://greenlock.tech/#organization' },
+  areaServed: { '@type': 'Country', name: 'España' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios de Ciberseguridad',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Auditoría Perimetral',
+          description: 'Análisis exhaustivo de tu superficie de ataque externa. Identificamos vulnerabilidades antes que los atacantes.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Red Team',
+          description: 'Simulaciones de ataque realistas que ponen a prueba tus defensas, procesos y equipo de respuesta.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Compliance & Normativa',
+          description: 'Te ayudamos a cumplir NIS2, ENS, ISO 27001 y GDPR con auditorías técnicas y documentación.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Ciberseguridad 360',
+          description: 'Protección integral: desde la auditoría inicial hasta la monitorización continua de tu infraestructura.',
+        },
+      },
+    ],
+  },
+};
+---
+
+<BaseLayout
+  title="GreenLock Cybersecurity | Ciberseguridad y Consultoría Tecnológica"
+  description="Pentesting, Red Team y auditorías de seguridad ejecutados por profesionales certificados CRTO, BSCP y eJPT. Para empresas que no se pueden permitir fallar."
+  schemas={[serviceSchema]}
+>
+  <Hero />
+  <ServicesGrid />
+  <TrustBar />
+  <CaseStudyHighlight />
+  <Numbers />
+  <Team />
+  <BlogRecent />
+  <FinalCTA />
+</BaseLayout>

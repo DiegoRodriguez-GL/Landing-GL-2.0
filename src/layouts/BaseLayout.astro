@@ -1,0 +1,221 @@
+---
+import '../../app.css';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import WhatsAppWidget from '@components/layout/WhatsAppWidget.astro';
+import CookieBanner from '@components/layout/CookieBanner.astro';
+import HeadCommon from '@components/layout/HeadCommon.astro';
+import TrackingScripts from '@components/layout/TrackingScripts.astro';
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  canonicalURL?: string;
+  noindex?: boolean;
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  articleSection?: string;
+  /** Additional JSON-LD schemas to inject (array of objects) */
+  schemas?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  ogImage = '/images/og/og-default.png',
+  ogType = 'website',
+  canonicalURL,
+  noindex = false,
+  publishedTime,
+  modifiedTime,
+  author,
+  articleSection,
+  schemas = [],
+} = Astro.props;
+
+const isHome = Astro.url.pathname === '/';
+const fullTitle = isHome ? title : `${title} | GreenLock Cybersecurity`;
+const resolvedCanonical = canonicalURL || new URL(Astro.url.pathname, Astro.site).href;
+const resolvedOgImage = new URL(ogImage, Astro.site).href;
+
+// Organization JSON-LD (all pages)
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'LocalBusiness'],
+  '@id': 'https://greenlock.tech/#organization',
+  name: 'GreenLock Cybersecurity',
+  url: 'https://greenlock.tech',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://greenlock.tech/images/icons/Logo.svg',
+    width: 1024,
+    height: 1024,
+  },
+  foundingDate: '2025',
+  description: 'Empresa española de ciberseguridad especializada en pentesting, Red Team y auditorías de seguridad para empresas.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Calle Egido 38',
+    postalCode: '28723',
+    addressLocality: 'Pedrezuela',
+    addressRegion: 'Comunidad de Madrid',
+    addressCountry: 'ES',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 40.7376,
+    longitude: -3.6092,
+  },
+  telephone: '+34682790545',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'info@greenlock.tech',
+    telephone: '+34682790545',
+    contactType: 'sales',
+    availableLanguage: ['Spanish', 'English'],
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'España',
+  },
+  priceRange: '€€€',
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '18:00',
+  },
+  sameAs: [
+    'https://www.linkedin.com/company/greenlock-cybersecurity',
+    'https://www.youtube.com/@hackn3t',
+  ],
+  founder: [
+    {
+      '@type': 'Person',
+      name: 'Damián Pérez Moreno',
+      jobTitle: 'Co-founder & Offensive Security',
+    },
+    {
+      '@type': 'Person',
+      name: 'Diego Rodríguez Sanz',
+      jobTitle: 'Co-founder & Security Engineering',
+    },
+  ],
+  knowsAbout: [
+    'Pentesting',
+    'Red Team',
+    'Auditoría de Seguridad',
+    'Cumplimiento Normativo',
+    'OWASP',
+    'MITRE ATT&CK',
+  ],
+};
+
+// WebSite JSON-LD (home page only — for sitelinks search box potential)
+const webSiteSchema = isHome ? {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': 'https://greenlock.tech/#website',
+  name: 'GreenLock Cybersecurity',
+  url: 'https://greenlock.tech',
+  inLanguage: 'es',
+  publisher: { '@id': 'https://greenlock.tech/#organization' },
+} : null;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ViewTransitions />
+
+    <HeadCommon />
+
+    <!-- SEO Primary -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={resolvedCanonical} />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    )}
+
+    <!-- Author -->
+    <meta name="author" content="GreenLock Cybersecurity" />
+
+    <!-- Language / Geo -->
+    <meta name="language" content="es" />
+    <meta name="geo.region" content="ES-MD" />
+    <meta name="geo.placename" content="Madrid" />
+
+    <!-- Hero LCP image is handled by <Image> with loading="eager" + fetchpriority="high" -->
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="GreenLock Blog" href="/rss.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={resolvedCanonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${title} | GreenLock Cybersecurity`} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="GreenLock Cybersecurity" />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {author && <meta property="article:author" content={author} />}
+    {articleSection && <meta property="article:section" content={articleSection} />}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@greenlockciber" />
+    <meta name="twitter:creator" content="@greenlockciber" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <meta name="twitter:image:alt" content={`${title} | GreenLock Cybersecurity`} />
+
+    <!-- JSON-LD Organization (all pages) -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+
+    <!-- JSON-LD WebSite (home only) -->
+    {webSiteSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
+    )}
+
+    <!-- Additional JSON-LD schemas -->
+    {schemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body class="bg-white text-dark-900 font-sans antialiased">
+    <TrackingScripts />
+
+    <!-- Skip to content (accessibility) -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brand-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"
+    >
+      Saltar al contenido principal
+    </a>
+
+    <Header />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+    <WhatsAppWidget />
+    <CookieBanner />
+  </body>
+</html>

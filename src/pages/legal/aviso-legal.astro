@@ -1,0 +1,97 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+// BreadcrumbList JSON-LD only (visual breadcrumbs hidden)
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://greenlock.tech/' },
+    { '@type': 'ListItem', position: 2, name: 'Aviso Legal' },
+  ],
+};
+---
+
+<BaseLayout
+  title="Aviso Legal"
+  description="Aviso legal de GreenLock Cybersecurity E.S.P.J. Información sobre la empresa, condiciones de uso y responsabilidades."
+  noindex={true}
+  schemas={[breadcrumbSchema]}
+>
+  <section class="bg-white">
+    <div class="container-custom section-padding" style="padding-top: 1.5rem;">
+      <div class="prose prose-green max-w-none" style="text-align: justify;">
+        <h1 style="margin-top: 0;">Aviso Legal</h1>
+        <p class="lead">Última actualización: marzo 2026</p>
+
+        <h2>1. Datos identificativos</h2>
+        <p>
+          En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI-CE), a continuación se reflejan los datos identificativos del titular de este sitio web:
+        </p>
+        <ul>
+          <li><strong>Denominación social:</strong> GreenLock Cybersecurity E.S.P.J.</li>
+          <li><strong>NIF:</strong> E22754246</li>
+          <li><strong>Domicilio social:</strong> Calle Egido 38, 28723, Pedrezuela (Madrid), España</li>
+          <li><strong>Teléfono de contacto:</strong> <a href="tel:+34682790545">+34 682 790 545</a></li>
+          <li><strong>Email de contacto:</strong> <a href="mailto:info@greenlock.tech">info@greenlock.tech</a></li>
+          <li><strong>Sitio web:</strong> <a href="https://greenlock.tech">greenlock.tech</a></li>
+        </ul>
+
+        <h2>2. Objeto</h2>
+        <p>
+          El presente sitio web tiene por objeto facilitar al público información sobre los servicios profesionales de ciberseguridad ofrecidos por GreenLock Cybersecurity E.S.P.J., incluyendo auditorías de seguridad, pentesting, ejercicios de Red Team, consultoría de cumplimiento normativo y formación en ciberseguridad, así como permitir el contacto directo con nuestro equipo profesional.
+        </p>
+
+        <h2>3. Propiedad intelectual e industrial</h2>
+        <p>
+          Todos los contenidos de este sitio web, incluyendo a título enunciativo pero no limitativo: textos, fotografías, gráficos, imágenes, iconos, diseño, código fuente, logotipos, marcas comerciales, nombres comerciales y cualquier otro elemento susceptible de protección, son propiedad de GreenLock Cybersecurity E.S.P.J. o de sus legítimos titulares y están protegidos por las normas nacionales e internacionales de propiedad intelectual e industrial.
+        </p>
+        <p>
+          Queda expresamente prohibida la reproducción total o parcial de este sitio web y de cualquiera de sus contenidos sin el permiso expreso y por escrito de GreenLock Cybersecurity E.S.P.J.
+        </p>
+
+        <h2>4. Condiciones de uso</h2>
+        <p>
+          El usuario se compromete a hacer un uso adecuado y lícito de los contenidos y servicios ofrecidos a través del sitio web, absteniéndose de:
+        </p>
+        <ul>
+          <li>Realizar actividades ilícitas, ilegales o contrarias a la buena fe y al orden público.</li>
+          <li>Difundir contenidos o propaganda de carácter racista, xenófobo, ilegal o que atente contra los derechos fundamentales.</li>
+          <li>Provocar daños en los sistemas físicos y lógicos de GreenLock Cybersecurity, de sus proveedores o de terceros.</li>
+          <li>Intentar acceder a áreas restringidas de los sistemas informáticos de GreenLock Cybersecurity o de terceros y, en su caso, extraer información.</li>
+          <li>Vulnerar los derechos de propiedad intelectual o industrial, así como violar la confidencialidad de la información de GreenLock Cybersecurity o de terceros.</li>
+          <li>Suplantar la identidad de cualquier otro usuario o de GreenLock Cybersecurity.</li>
+        </ul>
+
+        <h2>5. Exclusión de responsabilidad</h2>
+        <p>
+          GreenLock Cybersecurity E.S.P.J. no se hace responsable, en ningún caso, de los daños y perjuicios de cualquier naturaleza que pudieran derivarse del acceso o uso de los contenidos del sitio web. En particular, no será responsable de:
+        </p>
+        <ul>
+          <li>La falta de disponibilidad, mantenimiento y efectivo funcionamiento del sitio web o de sus servicios y contenidos.</li>
+          <li>La falta de utilidad, adecuación o validez del sitio web, de sus servicios y contenidos para satisfacer necesidades, actividades o resultados concretos del usuario.</li>
+          <li>La existencia de virus, programas maliciosos o lesivos en los contenidos.</li>
+          <li>Los daños producidos por terceros mediante intromisiones ilegítimas fuera del control de GreenLock Cybersecurity.</li>
+        </ul>
+        <p>
+          Los contenidos de este sitio web son de carácter general e informativo y no constituyen, en modo alguno, la prestación de un servicio de asesoramiento profesional de ningún tipo.
+        </p>
+
+        <h2>6. Enlaces a terceros</h2>
+        <p>
+          Este sitio web puede contener enlaces a páginas de terceros. GreenLock Cybersecurity E.S.P.J. no asume ninguna responsabilidad por el contenido, informaciones o servicios que pudieran aparecer en dichos sitios, que se ofrecen exclusivamente con carácter informativo y que en ningún caso implican relación, aprobación o respaldo alguno entre GreenLock Cybersecurity y las personas o entidades titulares de tales contenidos.
+        </p>
+
+        <h2>7. Modificaciones</h2>
+        <p>
+          GreenLock Cybersecurity E.S.P.J. se reserva el derecho de efectuar, sin previo aviso, las modificaciones que considere oportunas en su sitio web, pudiendo cambiar, suprimir o añadir tanto los contenidos y servicios que se presten a través del mismo como la forma en la que estos aparezcan presentados o localizados.
+        </p>
+
+        <h2>8. Legislación aplicable y jurisdicción</h2>
+        <p>
+          La relación entre GreenLock Cybersecurity E.S.P.J. y el usuario se regirá por la normativa española vigente. Para la resolución de cualquier controversia, las partes se someterán a los Juzgados y Tribunales de Madrid, salvo que la ley disponga otra cosa.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

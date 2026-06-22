@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import heroImg from '@assets/Hero-GL.webp';
+---
+
+<section class="relative overflow-hidden bg-[#f3f4f6]">
+
+  <div class="relative z-10 container-custom pb-12 md:pb-16 lg:pb-20" style="padding-top: clamp(7rem, 10vw, 10rem);">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      <!-- Left: Copy -->
+      <div>
+        <h1 class="text-4xl md:text-5xl xl:text-[3.5rem] mb-6 leading-[1.1] tracking-tight">
+          <span class="text-dark-950 font-bold">Protege tu empresa</span>
+          <br/>
+          <span class="text-dark-700" style="font-weight: 300;">antes de perder dinero y clientes</span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-dark-500 max-w-xl mb-10 leading-relaxed">
+          Encontramos las vulnerabilidades que los ciberdelincuentes explotarían y te asesoramos para corregirlas antes de que sea demasiado tarde.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a
+            href="https://wa.me/34682790545?text=Hola%2C%20me%20interesa%20información%20sobre%20ciberseguridad%20para%20mi%20empresa%20[REF:WEB-HERO]"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hero-btn-whatsapp inline-flex items-center justify-center px-8 py-4 rounded-none font-semibold text-base transition-all"
+          >
+            Asesoramiento gratuito
+          </a>
+          <a
+            href="#servicios"
+            class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-none border-2 border-dark-800 text-dark-800 font-semibold hover:bg-dark-800 hover:text-white transition-colors text-base"
+          >
+            Cómo trabajamos
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Hero image -->
+      <div class="flex items-center justify-center">
+        <Image
+          src={heroImg}
+          alt="Protección de ciberseguridad empresarial - GreenLock escudo de seguridad ofensiva"
+          width={600}
+          height={600}
+          class="w-full max-w-lg h-auto"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Corner decoration — bottom left -->
+  <svg class="pointer-events-none" style="position: absolute; bottom: 0; left: 0; width: 320px; height: 320px; z-index: 5;" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="0,400 0,160 240,400" fill="#030712" opacity="0.045"/>
+    <polygon points="0,400 0,220 180,400" fill="#22c55e" opacity="0.07"/>
+    <polygon points="0,400 0,280 120,400" fill="#030712" opacity="0.03"/>
+    <line x1="260" y1="400" x2="0" y2="140" stroke="#22c55e" stroke-width="0.75" opacity="0.12"/>
+    <line x1="200" y1="400" x2="0" y2="200" stroke="#030712" stroke-width="0.5" opacity="0.06"/>
+  </svg>
+
+  <!-- Corner decoration — bottom right -->
+  <svg class="pointer-events-none" style="position: absolute; bottom: 0; right: 0; width: 320px; height: 320px; z-index: 5;" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="400,400 400,160 160,400" fill="#030712" opacity="0.045"/>
+    <polygon points="400,400 400,220 220,400" fill="#22c55e" opacity="0.07"/>
+    <polygon points="400,400 400,280 280,400" fill="#030712" opacity="0.03"/>
+    <line x1="140" y1="400" x2="400" y2="140" stroke="#22c55e" stroke-width="0.75" opacity="0.12"/>
+    <line x1="200" y1="400" x2="400" y2="200" stroke="#030712" stroke-width="0.5" opacity="0.06"/>
+  </svg>
+</section>
+
+<style>
+  .hero-btn-whatsapp {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border: none;
+    color: #fff;
+  }
+  .hero-btn-whatsapp:hover {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    transform: translateY(-1px);
+  }
+  .hero-btn-whatsapp:active {
+    background: #15803d;
+    transform: translateY(0);
+  }
+</style>

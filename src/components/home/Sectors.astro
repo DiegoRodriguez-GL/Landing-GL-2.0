@@ -1,0 +1,65 @@
+---
+const sectors = [
+  {
+    title: 'Fintech',
+    description: 'Banca, pagos y plataformas financieras. Cumplimiento PCI DSS, DORA y PSD2.',
+    href: '/sectores/fintech',
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>`,
+  },
+  {
+    title: 'Salud',
+    description: 'Hospitales, clínicas y healthtech. Protección de datos de pacientes y sistemas críticos.',
+    href: '/sectores/salud',
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>`,
+  },
+  {
+    title: 'Legal',
+    description: 'Despachos y legaltech. Cumplimiento GDPR, ENS y protección de información confidencial.',
+    href: '/sectores/legal',
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" /></svg>`,
+  },
+  {
+    title: 'Retail',
+    description: 'E-commerce y retail. Seguridad de plataformas de pago, inventarios y datos de clientes.',
+    href: '/sectores/retail-ecommerce',
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>`,
+  },
+  {
+    title: 'Industrial',
+    description: 'OT/ICS y SCADA. Seguridad de infraestructuras críticas y sistemas de control industrial.',
+    href: '/sectores/industrial',
+    icon: `<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.1-3.18M3.75 7.5l8.25 4.5m0 0l8.25-4.5M12 12v9m-8.25-4.5V7.5a.75.75 0 01.375-.65l7.5-4.125a.75.75 0 01.75 0l7.5 4.125a.75.75 0 01.375.65v9a.75.75 0 01-.375.65l-7.5 4.125a.75.75 0 01-.75 0l-7.5-4.125a.75.75 0 01-.375-.65z" /></svg>`,
+  },
+];
+---
+
+<section class="bg-dark-50">
+  <div class="container-custom section-padding">
+    <div class="text-center mb-12">
+      <p class="text-sm font-mono text-brand-500 tracking-wide uppercase mb-3">
+        Experiencia sectorial
+      </p>
+      <h2 class="text-3xl md:text-4xl font-bold text-dark-900">
+        Sectores que protegemos
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
+      {sectors.map((sector) => (
+        <div
+          class="group block p-5 rounded-xl border border-dark-200 bg-white text-center transition-all duration-300"
+        >
+          <div class="flex items-center justify-center w-12 h-12 mx-auto rounded-lg bg-brand-50 text-brand-500 mb-3 transition-colors">
+            <Fragment set:html={sector.icon} />
+          </div>
+          <h3 class="text-base font-bold text-dark-900 mb-1">
+            {sector.title}
+          </h3>
+          <p class="text-xs text-dark-500 leading-relaxed">
+            {sector.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

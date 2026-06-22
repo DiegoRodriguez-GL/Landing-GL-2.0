@@ -1,0 +1,209 @@
+---
+import '../../app.css';
+import WhatsAppWidget from '@components/layout/WhatsAppWidget.astro';
+import CookieBanner from '@components/layout/CookieBanner.astro';
+import HeadCommon from '@components/layout/HeadCommon.astro';
+import TrackingScripts from '@components/layout/TrackingScripts.astro';
+import { Image } from 'astro:assets';
+import logoImg from '@assets/icons/Logo.webp';
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  canonicalURL?: string;
+  noindex?: boolean;
+  /** Additional JSON-LD schemas to inject (array of objects) */
+  schemas?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  ogImage = '/images/og/og-default.png',
+  canonicalURL,
+  noindex = false,
+  schemas = [],
+} = Astro.props;
+
+const fullTitle = `${title} | GreenLock Cybersecurity`;
+const resolvedCanonical = canonicalURL || new URL(Astro.url.pathname, Astro.site).href;
+const resolvedOgImage = new URL(ogImage, Astro.site).href;
+const currentYear = new Date().getFullYear();
+
+// Organization JSON-LD (all pages)
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'LocalBusiness'],
+  '@id': 'https://greenlock.tech/#organization',
+  name: 'GreenLock Cybersecurity',
+  url: 'https://greenlock.tech',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://greenlock.tech/images/icons/Logo.svg',
+    width: 1024,
+    height: 1024,
+  },
+  foundingDate: '2025',
+  description: 'Empresa española de ciberseguridad especializada en pentesting, Red Team y auditorías de seguridad para empresas.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Calle Egido 38',
+    postalCode: '28723',
+    addressLocality: 'Pedrezuela',
+    addressRegion: 'Comunidad de Madrid',
+    addressCountry: 'ES',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 40.7376,
+    longitude: -3.6092,
+  },
+  telephone: '+34682790545',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'info@greenlock.tech',
+    telephone: '+34682790545',
+    contactType: 'sales',
+    availableLanguage: ['Spanish', 'English'],
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'España',
+  },
+  priceRange: '€€€',
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '18:00',
+  },
+  sameAs: [
+    'https://www.linkedin.com/company/greenlock-cybersecurity',
+    'https://www.youtube.com/@hackn3t',
+  ],
+  founder: [
+    {
+      '@type': 'Person',
+      name: 'Damián Pérez Moreno',
+      jobTitle: 'Co-founder & Offensive Security',
+    },
+    {
+      '@type': 'Person',
+      name: 'Diego Rodríguez Sanz',
+      jobTitle: 'Co-founder & Security Engineering',
+    },
+  ],
+  knowsAbout: [
+    'Pentesting',
+    'Red Team',
+    'Auditoría de Seguridad',
+    'Cumplimiento Normativo',
+    'OWASP',
+    'MITRE ATT&CK',
+  ],
+};
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <ViewTransitions />
+
+    <HeadCommon />
+
+    <!-- SEO -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={resolvedCanonical} />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    )}
+    <meta name="author" content="GreenLock Cybersecurity" />
+    <meta name="language" content="es" />
+    <meta name="geo.region" content="ES-MD" />
+    <meta name="geo.placename" content="Madrid" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={resolvedCanonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="GreenLock Cybersecurity" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@greenlockciber" />
+    <meta name="twitter:creator" content="@greenlockciber" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <meta name="twitter:image:alt" content={`${title} | GreenLock Cybersecurity`} />
+
+    <!-- JSON-LD Organization -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+
+    <!-- Additional JSON-LD schemas -->
+    {schemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body class="bg-white text-dark-900 font-sans antialiased">
+    <TrackingScripts />
+
+    <!-- Skip to content (accessibility) -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-brand-500 focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"
+    >
+      Saltar al contenido principal
+    </a>
+
+    <!-- Minimal header: logo only -->
+    <header class="bg-white border-b border-dark-100">
+      <div class="container-custom flex items-center justify-center py-4">
+        <a href="/" class="flex items-center gap-2" aria-label="GreenLock - Inicio">
+          <Image src={logoImg} alt="GreenLock" width={32} height={32} class="w-8 h-8 object-contain" loading="eager" />
+          <span class="text-xl font-bold text-dark-900">
+            Green<span class="text-brand-500">Lock</span>
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <!-- Minimal footer -->
+    <footer class="bg-dark-950 border-t border-dark-800">
+      <div class="container-custom py-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-2">
+            <Image src={logoImg} alt="GreenLock" width={20} height={20} class="w-5 h-5 object-contain" loading="lazy" />
+            <span class="text-sm text-dark-400">
+              &copy; {currentYear} GreenLock Cybersecurity
+            </span>
+          </div>
+          <nav class="flex items-center gap-4 text-xs text-dark-500">
+            <a href="/legal/aviso-legal" class="hover:text-white transition-colors">Aviso legal</a>
+            <a href="/legal/privacidad" class="hover:text-white transition-colors">Privacidad</a>
+            <a href="/legal/cookies" class="hover:text-white transition-colors">Cookies</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <WhatsAppWidget />
+    <CookieBanner />
+  </body>
+</html>

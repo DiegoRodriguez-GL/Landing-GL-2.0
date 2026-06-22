@@ -1,0 +1,210 @@
+---
+import { Image } from 'astro:assets';
+import logoImg from '@assets/icons/Logo.webp';
+---
+
+<div id="cookie-banner" class="cb" role="dialog" aria-label="Configuración de cookies" aria-modal="true">
+  <div class="cb-inner container-custom">
+    <div class="cb-content">
+      <div class="cb-icon">
+        <Image src={logoImg} alt="GreenLock" width={40} height={40} class="cb-icon-img" loading="lazy" decoding="async" />
+      </div>
+      <div class="cb-text">
+        <p class="cb-title">Utilizamos cookies</p>
+        <p class="cb-desc">
+          Usamos cookies técnicas esenciales para el funcionamiento del sitio. No usamos cookies publicitarias ni de seguimiento.
+          <a href="/legal/cookies" class="cb-link">Política de cookies</a>
+        </p>
+      </div>
+    </div>
+    <div class="cb-actions">
+      <button id="cb-reject" class="cb-btn cb-btn--secondary" type="button">Rechazar</button>
+      <button id="cb-accept" class="cb-btn cb-btn--primary" type="button">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cb-accept');
+  const rejectBtn = document.getElementById('cb-reject');
+
+  if (banner && acceptBtn && rejectBtn) {
+    // Check if user already made a choice
+    const consent = localStorage.getItem('gl_cookie_consent');
+    if (consent) {
+      banner.remove();
+    } else {
+      // Show banner with animation
+      requestAnimationFrame(() => {
+        banner.classList.add('cb--visible');
+      });
+
+      function updateConsent(granted: boolean) {
+        if (typeof window.gtag === 'function') {
+          window.gtag('consent', 'update', {
+            'analytics_storage': granted ? 'granted' : 'denied',
+            'ad_storage': granted ? 'granted' : 'denied',
+            'ad_user_data': granted ? 'granted' : 'denied',
+            'ad_personalization': granted ? 'granted' : 'denied',
+          });
+        }
+      }
+
+      function closeBanner(choice: string) {
+        localStorage.setItem('gl_cookie_consent', choice);
+        updateConsent(choice === 'accepted');
+        banner.classList.remove('cb--visible');
+        banner.classList.add('cb--hiding');
+        setTimeout(() => banner.remove(), 400);
+      }
+
+      acceptBtn.addEventListener('click', () => closeBanner('accepted'));
+      rejectBtn.addEventListener('click', () => closeBanner('rejected'));
+    }
+  }
+</script>
+
+<style>
+  .cb {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: #111827;
+    border-top: 1px solid #1f2937;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .cb--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .cb--hiding {
+    opacity: 0;
+    transform: translateY(100%);
+    pointer-events: none;
+  }
+
+  .cb-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .cb-content {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cb-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+  .cb-icon :global(img) {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .cb-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cb-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  .cb-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #9ca3af;
+  }
+
+  .cb-link {
+    color: #22c55e;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .cb-link:hover {
+    color: #4ade80;
+  }
+
+  .cb-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .cb-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .cb-btn:active {
+    transform: scale(0.97);
+  }
+
+  .cb-btn--primary {
+    background: #22c55e;
+    color: #fff;
+  }
+  .cb-btn--primary:hover {
+    background: #16a34a;
+  }
+
+  .cb-btn--secondary {
+    background: #1f2937;
+    color: #9ca3af;
+    border: 1px solid #374151;
+  }
+  .cb-btn--secondary:hover {
+    background: #374151;
+    color: #fff;
+  }
+
+  @media (max-width: 639px) {
+    .cb-inner {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .cb-icon {
+      display: none;
+    }
+    .cb-actions {
+      justify-content: stretch;
+    }
+    .cb-btn {
+      flex: 1;
+      text-align: center;
+    }
+  }
+</style>

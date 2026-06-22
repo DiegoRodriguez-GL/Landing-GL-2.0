@@ -1,0 +1,65 @@
+---
+/**
+ * Shared <head> content used by both BaseLayout and LandingLayout.
+ * Includes: Consent Mode v2, GTM, preconnects, favicons, theme color, Plausible.
+ *
+ * SEO meta tags and JSON-LD are NOT included here because each layout
+ * has different requirements (BaseLayout supports article metadata, etc.)
+ */
+
+const gtmId = import.meta.env.PUBLIC_GTM_ID || '';
+---
+
+<!-- Google Consent Mode v2 — defaults denied (GDPR) -->
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'analytics_storage': 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update': 500
+  });
+  // Restore consent if user already accepted
+  if (localStorage.getItem('gl_cookie_consent') === 'accepted') {
+    gtag('consent', 'update', {
+      'analytics_storage': 'granted',
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted'
+    });
+  }
+</script>
+
+{gtmId && (
+  <script is:inline define:vars={{ gtmId }}>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',gtmId);
+  </script>
+)}
+
+<!-- Preconnect: external resources for performance -->
+<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+<link rel="dns-prefetch" href="https://cdn.sanity.io" />
+<link rel="preconnect" href="https://plausible.io" crossorigin />
+<link rel="dns-prefetch" href="https://plausible.io" />
+{gtmId && <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />}
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<!-- Theme color (mobile browser chrome) -->
+<meta name="theme-color" content="#059669" />
+<meta name="msapplication-TileColor" content="#059669" />
+
+<!-- Analytics -->
+<script defer data-domain="greenlock.tech" src="https://plausible.io/js/script.js"></script>

@@ -1,0 +1,141 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+// BreadcrumbList JSON-LD only (visual breadcrumbs hidden)
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://greenlock.tech/' },
+    { '@type': 'ListItem', position: 2, name: 'Política de Privacidad' },
+  ],
+};
+---
+
+<BaseLayout
+  title="Política de Privacidad"
+  description="Política de privacidad de GreenLock Cybersecurity E.S.P.J. Información sobre el tratamiento de datos personales conforme al RGPD y la LOPDGDD."
+  noindex={true}
+  schemas={[breadcrumbSchema]}
+>
+  <section class="bg-white">
+    <div class="container-custom section-padding" style="padding-top: 1.5rem;">
+      <div class="prose prose-green max-w-none" style="text-align: justify;">
+        <h1 style="margin-top: 0;">Política de Privacidad</h1>
+        <p class="lead">Última actualización: marzo 2026</p>
+
+        <h2>1. Responsable del tratamiento</h2>
+        <p>De conformidad con el Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 de Protección de Datos y Garantía de los Derechos Digitales (LOPDGDD), le informamos que:</p>
+        <ul>
+          <li><strong>Responsable:</strong> GreenLock Cybersecurity E.S.P.J.</li>
+          <li><strong>NIF:</strong> E22754246</li>
+          <li><strong>Domicilio:</strong> Calle Egido 38, 28723, Pedrezuela (Madrid), España</li>
+          <li><strong>Teléfono:</strong> <a href="tel:+34682790545">+34 682 790 545</a></li>
+          <li><strong>Email:</strong> <a href="mailto:info@greenlock.tech">info@greenlock.tech</a></li>
+        </ul>
+
+        <h2>2. Datos que recopilamos</h2>
+        <p>A través de los formularios de contacto y solicitud de servicios de nuestro sitio web, podemos recopilar los siguientes datos personales:</p>
+        <ul>
+          <li>Nombre y apellidos</li>
+          <li>Dirección de correo electrónico corporativo</li>
+          <li>Número de teléfono de contacto</li>
+          <li>Nombre de la empresa u organización</li>
+          <li>Cargo o puesto profesional</li>
+          <li>Servicio de interés (opcional)</li>
+          <li>Tamaño de empresa (opcional)</li>
+          <li>Mensaje o descripción de la consulta (opcional)</li>
+        </ul>
+        <p>No recopilamos categorías especiales de datos personales (datos sensibles) a través de nuestro sitio web.</p>
+
+        <h2>3. Finalidad del tratamiento</h2>
+        <p>Tratamos sus datos personales para las siguientes finalidades:</p>
+        <ul>
+          <li><strong>Gestión de consultas:</strong> Atender y responder a sus solicitudes de información sobre nuestros servicios.</li>
+          <li><strong>Propuestas comerciales:</strong> Elaborar y enviar presupuestos y propuestas de servicios personalizadas.</li>
+          <li><strong>Relación contractual:</strong> Gestionar la relación contractual en caso de formalización de un acuerdo de servicios.</li>
+          <li><strong>Comunicaciones comerciales:</strong> Únicamente con su consentimiento previo y expreso, enviarle información sobre nuestros servicios, novedades o contenidos relevantes en materia de ciberseguridad.</li>
+        </ul>
+
+        <h2>4. Base legal del tratamiento</h2>
+        <p>El tratamiento de sus datos se fundamenta en las siguientes bases legales:</p>
+        <ul>
+          <li><strong>Consentimiento (Art. 6.1.a RGPD):</strong> Al enviar un formulario de contacto, usted presta su consentimiento explícito para el tratamiento de sus datos con las finalidades indicadas.</li>
+          <li><strong>Interés legítimo (Art. 6.1.f RGPD):</strong> Responder a solicitudes comerciales y mantener una relación profesional con clientes y potenciales clientes.</li>
+          <li><strong>Ejecución contractual (Art. 6.1.b RGPD):</strong> Cuando el tratamiento sea necesario para la ejecución de un contrato de prestación de servicios.</li>
+          <li><strong>Obligación legal (Art. 6.1.c RGPD):</strong> Cuando el tratamiento sea necesario para cumplir obligaciones legales (fiscal, mercantil, etc.).</li>
+        </ul>
+
+        <h2>5. Plazo de conservación</h2>
+        <p>Conservaremos sus datos personales durante los siguientes plazos:</p>
+        <ul>
+          <li><strong>Consultas sin relación contractual:</strong> Los datos se conservarán durante un máximo de 12 meses desde la última comunicación.</li>
+          <li><strong>Relación contractual:</strong> Durante la vigencia del contrato y posteriormente durante los plazos legales de prescripción aplicables (generalmente 5 años conforme al artículo 1964 del Código Civil).</li>
+          <li><strong>Obligaciones legales:</strong> Durante los plazos exigidos por la legislación vigente (fiscal: 4 años; mercantil: 6 años).</li>
+        </ul>
+
+        <h2>6. Derechos del interesado</h2>
+        <p>Usted tiene derecho a:</p>
+        <ul>
+          <li><strong>Acceso:</strong> Conocer si estamos tratando sus datos y obtener una copia de los mismos.</li>
+          <li><strong>Rectificación:</strong> Solicitar la corrección de datos inexactos o incompletos.</li>
+          <li><strong>Supresión:</strong> Solicitar la eliminación de sus datos cuando ya no sean necesarios para la finalidad recogida.</li>
+          <li><strong>Oposición:</strong> Oponerse al tratamiento de sus datos en determinadas circunstancias.</li>
+          <li><strong>Limitación:</strong> Solicitar la limitación del tratamiento en los supuestos previstos legalmente.</li>
+          <li><strong>Portabilidad:</strong> Recibir sus datos en un formato estructurado y de uso común.</li>
+        </ul>
+        <p>
+          Para ejercer cualquiera de estos derechos, puede dirigirse a nosotros mediante correo electrónico a <a href="mailto:info@greenlock.tech">info@greenlock.tech</a> o por correo postal a Calle Egido 38, 28723, Pedrezuela (Madrid), indicando su solicitud y adjuntando copia de su documento de identidad.
+        </p>
+        <p>
+          Si considera que el tratamiento de sus datos no se ajusta a la normativa vigente, tiene derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a>).
+        </p>
+
+        <h2>7. Cesión y comunicación de datos</h2>
+        <p>
+          No compartimos, vendemos ni cedemos sus datos personales a terceros, salvo en los siguientes supuestos:
+        </p>
+        <ul>
+          <li><strong>Obligación legal:</strong> Cuando exista una obligación legal de comunicarlos a administraciones públicas, juzgados o fuerzas de seguridad.</li>
+          <li><strong>Encargados del tratamiento:</strong> Utilizamos proveedores de confianza que actúan como encargados del tratamiento conforme al Art. 28 del RGPD, con los que hemos suscrito los correspondientes contratos de encargo de tratamiento. Estos incluyen:
+            <ul>
+              <li>Cloudflare (hosting y CDN)</li>
+              <li>Resend (envío de correos electrónicos transaccionales)</li>
+              <li>Sanity (gestión de contenidos)</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h2>8. Transferencias internacionales</h2>
+        <p>
+          Algunos de nuestros encargados del tratamiento pueden estar ubicados fuera del Espacio Económico Europeo (EEE). En estos casos, nos aseguramos de que las transferencias se realicen con las garantías adecuadas, como las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea o el acuerdo EU-US Data Privacy Framework.
+        </p>
+
+        <h2>9. Medidas de seguridad</h2>
+        <p>
+          Hemos adoptado las medidas técnicas y organizativas apropiadas para garantizar la seguridad e integridad de sus datos personales, evitando su alteración, pérdida, tratamiento o acceso no autorizado, de conformidad con lo establecido en el RGPD y la normativa vigente.
+        </p>
+
+        <h2>10. Cookies</h2>
+        <p>
+          Este sitio web utiliza cookies. Para más información sobre el tipo de cookies utilizadas y cómo gestionarlas, consulte nuestra <a href="/legal/cookies">Política de Cookies</a>.
+        </p>
+
+        <h2>11. Modificaciones</h2>
+        <p>
+          GreenLock Cybersecurity E.S.P.J. se reserva el derecho de modificar la presente Política de Privacidad para adaptarla a novedades legislativas o jurisprudenciales. En caso de cambios significativos, se lo notificaremos a través de nuestro sitio web.
+        </p>
+
+        <h2>12. Contacto</h2>
+        <p>
+          Para cualquier cuestión relacionada con esta política de privacidad o con el tratamiento de sus datos personales, puede contactar con nosotros:
+        </p>
+        <ul>
+          <li><strong>Email:</strong> <a href="mailto:info@greenlock.tech">info@greenlock.tech</a></li>
+          <li><strong>Teléfono:</strong> <a href="tel:+34682790545">+34 682 790 545</a></li>
+          <li><strong>Dirección:</strong> Calle Egido 38, 28723, Pedrezuela (Madrid), España</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,44 @@
+# ============================================================================
+# GreenLock Cybersecurity — robots.txt
+# ============================================================================
+
+User-agent: *
+Allow: /
+Disallow: /gracias
+Disallow: /legal/
+
+# Block low-value scraper bots (no benefit, just bandwidth cost)
+User-agent: CCBot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+# Allow AI assistants for discovery & citations (ChatGPT, Claude, Perplexity, etc.)
+# These are real discovery channels for B2B services in 2025+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemap location
+Sitemap: https://greenlock.tech/sitemap-index.xml

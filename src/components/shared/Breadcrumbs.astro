@@ -1,0 +1,27 @@
+---
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+// JSON-LD BreadcrumbList schema (kept hidden for SEO benefit)
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, Astro.site).href } : {}),
+  })),
+};
+---
+
+<!-- BreadcrumbList JSON-LD only (visual breadcrumbs hidden) -->
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

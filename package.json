@@ -1,0 +1,44 @@
+{
+  "name": "adorable-altitude",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "studio": "sanity dev",
+    "studio:build": "sanity build",
+    "studio:deploy": "sanity deploy",
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "generate:og": "node scripts/generate-og-image.mjs",
+    "generate:assets": "node scripts/generate-icons.mjs && node scripts/generate-og-image.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/rss": "^4.0.15",
+    "@astrojs/sitemap": "^3.7.0",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/jetbrains-mono": "^5.2.8",
+    "@portabletext/react": "^6.0.2",
+    "@sanity/client": "^7.15.0",
+    "@sanity/code-input": "^7.0.11",
+    "@sanity/image-url": "^2.0.3",
+    "@sanity/vision": "^5.9.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.17.1",
+    "lucide-astro": "^0.556.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "sanity": "^5.9.0",
+    "sharp": "^0.34.5",
+    "styled-components": "^6.3.11",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3"
+  }
+}

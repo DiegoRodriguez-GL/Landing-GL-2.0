@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
+import ServiceHero from '@components/services/ServiceHero.astro';
+import ServiceContent from '@components/services/ServiceContent.astro';
+import ServiceFAQ from '@components/services/ServiceFAQ.astro';
+import RelatedServices from '@components/services/RelatedServices.astro';
+import ServiceCTA from '@components/services/ServiceCTA.astro';
+import type { ServiceData } from '@lib/services-data';
+
+interface Props {
+  service: ServiceData;
+}
+
+const { service } = Astro.props;
+
+// Breadcrumb items
+const breadcrumbItems = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Servicios', href: '/servicios' },
+  { label: service.title },
+];
+
+// JSON-LD Service schema
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.title,
+  description: service.description,
+  url: new URL(`/servicios/${service.slug}`, Astro.site).href,
+  provider: {
+    '@type': 'Organization',
+    name: 'GreenLock Cybersecurity',
+    url: 'https://greenlock.tech',
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'España',
+  },
+  serviceType: service.area === 'cybersecurity' ? 'Ciberseguridad' : 'Soluciones Digitales',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'EUR',
+    price: service.priceFrom.replace(/[^0-9]/g, ''),
+    priceSpecification: {
+      '@type': 'PriceSpecification',
+      priceCurrency: 'EUR',
+      price: service.priceFrom.replace(/[^0-9]/g, ''),
+      unitText: service.priceFrom.includes('/año') ? 'año' : 'proyecto',
+    },
+    availability: 'https://schema.org/InStock',
+  },
+};
+---
+
+<BaseLayout
+  title={service.metaTitle}
+  description={service.metaDescription}
+  schemas={[serviceSchema]}
+>
+
+  <!-- Breadcrumbs -->
+  <Breadcrumbs items={breadcrumbItems} />
+
+  <!-- Service Hero -->
+  <ServiceHero service={service} />
+
+  <!-- Service Content: What is + Deliverables + Methodology -->
+  <ServiceContent service={service} />
+
+  <!-- FAQ with JSON-LD -->
+  <ServiceFAQ faqs={service.faqs} serviceTitle={service.title} />
+
+  <!-- Related Services -->
+  <RelatedServices currentSlug={service.slug} />
+
+  <!-- Final CTA -->
+  <ServiceCTA ctaText={service.ctaText} serviceTitle={service.title} />
+</BaseLayout>

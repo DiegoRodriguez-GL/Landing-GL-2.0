@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import imgPerimetral from '@assets/perimetral.webp';
+import imgRedTeam from '@assets/red-team.webp';
+import imgCompliance from '@assets/compliance.webp';
+import img360 from '@assets/360.webp';
+
+const services = [
+  {
+    title: 'Auditoría Perimetral',
+    description: 'Análisis exhaustivo de tu superficie de ataque externa. Identificamos cada punto de entrada antes que los atacantes.',
+    icon: imgPerimetral,
+  },
+  {
+    title: 'Red Team',
+    description: 'Simulación de ataque real end-to-end. OSINT, ingeniería social, acceso físico y movimiento lateral sin restricciones.',
+    icon: imgRedTeam,
+    iconSize: '150px',
+  },
+  {
+    title: 'Compliance',
+    description: 'Cumplimiento normativo integral: NIS2, ENS e ISO 27001. Te preparamos para pasar cualquier auditoría.',
+    icon: imgCompliance,
+  },
+  {
+    title: 'Ciberseguridad 360',
+    description: 'Pentesting as a Service. Suscripción anual con auditorías recurrentes, monitorización continua y soporte dedicado.',
+    icon: img360,
+  },
+];
+---
+
+<section id="servicios" class="bg-white">
+  <div class="container-custom section-padding">
+
+    <!-- Title + description -->
+    <div class="mb-16 max-w-3xl">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-900 mb-5 leading-tight">
+        Tu negocio <span style="color: #22c55e;">genera dinero.</span><br/>
+        GreenLock lo mantiene <span style="color: #22c55e;">seguro.</span>
+      </h2>
+      <p class="text-lg text-dark-500 leading-relaxed">
+        Ofrecemos servicios integrales de ciberseguridad que van más allá de la auditoría: identificamos riesgos reales, te asesoramos para mitigarlos y formamos a tu equipo.
+      </p>
+    </div>
+
+    <!-- Services grid -->
+    <div class="svc-grid">
+      {services.map((service) => (
+        <div class="svc-card">
+          <div class="svc-icon-area">
+            <Image src={service.icon} alt={service.title} width={180} height={180} class="svc-icon-img" loading="eager" decoding="async" style={service.iconSize ? `width: ${service.iconSize}; height: ${service.iconSize};` : ''} />
+          </div>
+          <div class="svc-content">
+            <h3 class="svc-title">{service.title}</h3>
+            <p class="svc-desc">{service.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .svc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .svc-card {
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+    transition: transform 0.3s ease;
+  }
+  .svc-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .svc-icon-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 24px 16px;
+    height: 220px;
+  }
+
+  .svc-icon-img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+  .svc-card:hover .svc-icon-img {
+    transform: scale(1.06);
+  }
+
+  .svc-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 16px 24px;
+  }
+
+  .svc-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .svc-desc {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: #6b7280;
+  }
+
+  @media (max-width: 639px) {
+    .svc-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .svc-icon-img {
+      width: 140px;
+      height: 140px;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .svc-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

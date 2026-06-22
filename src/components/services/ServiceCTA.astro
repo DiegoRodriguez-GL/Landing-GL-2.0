@@ -1,0 +1,39 @@
+---
+interface Props {
+  ctaText: string;
+  serviceTitle: string;
+}
+
+const { ctaText, serviceTitle } = Astro.props;
+---
+
+<section class="section-padding gl-final-cta">
+  <div class="container-custom">
+    <div class="gl-final-cta-inner">
+      <span class="gl-eyebrow-mono" style="color: #22c55e;">◆ Da el primer paso</span>
+      <h2>¿Listo para empezar con <span style="color: #4ade80;">{serviceTitle}</span>?</h2>
+      <p class="gl-lead">
+        Cuéntanos tu proyecto y te enviamos una propuesta personalizada en menos de 48 horas. Sin compromiso.
+      </p>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-bottom: 24px;">
+        <a href="/contacto" class="gl-btn-primary">
+          {ctaText}
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+        <a href="/solicitar-auditoria" class="gl-btn-dark-ghost">
+          Auditoría gratuita
+        </a>
+      </div>
+
+      <p style="font-size: 14px; color: #64748B;">
+        O escríbenos directo a
+        <a href="mailto:info@greenlock.tech" style="color: #22c55e; font-weight: 500; text-decoration: none;">info@greenlock.tech</a>
+        ·
+        <a href="tel:+34682790545" style="color: #22c55e; font-weight: 500; text-decoration: none;">+34 682 790 545</a>
+      </p>
+    </div>
+  </div>
+</section>

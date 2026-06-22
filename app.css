@@ -1,0 +1,623 @@
+/* ============================================
+   GreenLock Cybersecurity — Design System
+   Tailwind CSS v4 Configuration
+   ============================================ */
+
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ============================================
+   Theme: Design Tokens
+   ============================================ */
+@theme {
+  /* Brand Emerald — Primary action color
+     Base: #059669 (500) */
+  --color-brand-50:  #ECFDF5;
+  --color-brand-100: #D1FAE5;
+  --color-brand-200: #A7F3D0;
+  --color-brand-300: #6EE7B7;
+  --color-brand-400: #10B981;
+  --color-brand-500: #059669;
+  --color-brand-600: #047857;
+  --color-brand-700: #065F46;
+  --color-brand-800: #064E3B;
+  --color-brand-900: #022C22;
+  --color-brand-950: #012A20;
+
+  /* Dark/Slate — Neutrals for text, backgrounds, borders */
+  --color-dark-50:  #F8FAFC;
+  --color-dark-100: #F1F5F9;
+  --color-dark-200: #E2E8F0;
+  --color-dark-300: #CBD5E1;
+  --color-dark-400: #94A3B8;
+  --color-dark-500: #64748B;
+  --color-dark-600: #475569;
+  --color-dark-700: #334155;
+  --color-dark-800: #1E293B;
+  --color-dark-900: #0F172A;
+  --color-dark-950: #030712;
+
+  /* Font families */
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Font sizes with line-heights */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1.16;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1.1;
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1.05;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.08), 0 1px 2px rgb(0 0 0 / 0.06);
+  --shadow-card-hover: 0 10px 25px rgb(0 0 0 / 0.1), 0 4px 10px rgb(0 0 0 / 0.05);
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-slide-up: slide-up 0.5s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(1rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slide-down {
+    from { opacity: 0; transform: translateY(-0.5rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-dark-900);
+  background-color: #ffffff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--color-brand-100);
+  color: var(--color-brand-950);
+}
+
+/* ============================================
+   Prose (Typography plugin) Customization
+   ============================================ */
+.prose {
+  --tw-prose-links: var(--color-brand-600);
+  --tw-prose-counters: var(--color-brand-500);
+  --tw-prose-bullets: var(--color-brand-400);
+  --tw-prose-headings: var(--color-dark-900);
+  --tw-prose-body: var(--color-dark-700);
+  --tw-prose-code: var(--color-brand-800);
+}
+
+/* ============================================
+   Custom Utility Classes
+   ============================================ */
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.section-padding {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+/* ============================================
+   GreenLock Design System — Components
+   (replicado del estilo home + Ciberseguridad 360)
+   ============================================ */
+
+/* ---- BUTTONS — rectangular + gradient (estilo home) ---- */
+.gl-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #fff;
+  padding: 15px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+  border-radius: 0;
+}
+.gl-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px -10px rgba(22, 163, 74, 0.6);
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  color: #fff;
+}
+.gl-btn-primary:active {
+  transform: translateY(0);
+  background: #15803d;
+}
+.gl-btn-primary svg {
+  width: 16px;
+  height: 16px;
+}
+
+.gl-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 28px;
+  border: 2px solid #1E293B;
+  color: #1E293B;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  background: transparent;
+  border-radius: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.gl-btn-ghost:hover {
+  background: #1E293B;
+  color: #fff;
+}
+
+.gl-btn-dark-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 28px;
+  border: 2px solid #94A3B8;
+  color: #F1F5F9;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  background: transparent;
+  border-radius: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.gl-btn-dark-ghost:hover {
+  background: #fff;
+  color: #0F172A;
+}
+
+/* ---- EYEBROW — pill blanco con borde verde + pulse ---- */
+.gl-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: #fff;
+  border: 1px solid #22c55e;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #15803d;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+.gl-eyebrow .gl-pulse {
+  width: 7px;
+  height: 7px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: gl-pulse 2s infinite;
+  flex-shrink: 0;
+}
+@keyframes gl-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+}
+
+.gl-eyebrow-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #16a34a;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ---- SECTION HEAD ---- */
+.gl-section-head {
+  margin-bottom: 48px;
+  max-width: 720px;
+}
+.gl-section-head.gl-center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 768px) {
+  .gl-section-head {
+    margin-bottom: 56px;
+  }
+}
+
+.gl-section-title {
+  font-size: clamp(1.875rem, 4vw, 3rem);
+  line-height: 1.15;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 16px;
+  letter-spacing: -0.03em;
+}
+.gl-section-title .gl-hl {
+  color: #22c55e;
+}
+
+.gl-section-sub {
+  font-size: 18px;
+  color: #64748B;
+  line-height: 1.6;
+  max-width: 640px;
+}
+.gl-center .gl-section-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---- CARDS — border-radius 14px + hover lift ---- */
+.gl-card {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 28px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.gl-card:hover {
+  border-color: #22c55e;
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px -14px rgba(15, 23, 42, 0.12);
+}
+
+.gl-card-icon {
+  width: 48px;
+  height: 48px;
+  background: #f0fdf4;
+  color: #16a34a;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+.gl-card-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.gl-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.gl-card p {
+  font-size: 14px;
+  color: #64748B;
+  line-height: 1.6;
+}
+
+/* ---- HERO PATTERN ---- */
+.gl-hero {
+  position: relative;
+  overflow: hidden;
+  background: #f3f4f6;
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.gl-hero-title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #0F172A;
+}
+.gl-hero-title .gl-soft {
+  font-weight: 300;
+  color: #334155;
+}
+.gl-hero-title .gl-hl {
+  color: #16a34a;
+}
+
+.gl-hero-lead {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  color: #64748B;
+  max-width: 560px;
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+
+.gl-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.gl-hero-corner {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  width: 280px;
+  height: 280px;
+  z-index: 5;
+}
+.gl-hero-corner.gl-left { left: 0; }
+.gl-hero-corner.gl-right { right: 0; }
+
+/* ---- FINAL CTA — dark with green fade ---- */
+.gl-final-cta {
+  position: relative;
+  overflow: hidden;
+  background: #030712;
+}
+.gl-final-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #030712 0%, #030712 60%, rgba(22, 163, 74, 0.15) 100%);
+}
+.gl-final-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.gl-final-cta-inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 740px;
+  margin: 0 auto;
+}
+.gl-final-cta h2 {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  color: #fff;
+  margin-bottom: 18px;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-weight: 700;
+}
+.gl-final-cta .gl-lead {
+  font-size: 18px;
+  color: #cbd5e1;
+  line-height: 1.65;
+  margin-bottom: 36px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---- FAQ accordion (estilo Varonis) ---- */
+.gl-faq {
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.gl-faq[open] {
+  border-color: #22c55e;
+  box-shadow: 0 6px 20px -6px rgba(34, 197, 94, 0.18);
+}
+.gl-faq summary {
+  padding: 20px 24px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: #0F172A;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.gl-faq summary::-webkit-details-marker { display: none; }
+.gl-faq-icon {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #E2E8F0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.25s, background 0.2s, color 0.2s, border-color 0.2s;
+  color: #64748B;
+}
+.gl-faq[open] .gl-faq-icon {
+  transform: rotate(45deg);
+  background: #22c55e;
+  color: #fff;
+  border-color: #22c55e;
+}
+.gl-faq-icon svg {
+  width: 14px;
+  height: 14px;
+}
+.gl-faq-body {
+  padding: 0 24px 22px;
+  color: #475569;
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+/* ---- COMPARE CARDS (bad/good) ---- */
+.gl-comp {
+  display: grid;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .gl-comp { grid-template-columns: 1fr 1fr; }
+}
+.gl-comp-card {
+  padding: 32px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  position: relative;
+}
+.gl-comp-card.gl-bad {
+  background: #F8FAFC;
+}
+.gl-comp-card.gl-good {
+  border: 2px solid #22c55e;
+  box-shadow: 0 12px 40px -12px rgba(34, 197, 94, 0.25);
+}
+.gl-comp-card .gl-label {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 18px;
+}
+.gl-comp-card.gl-bad .gl-label {
+  background: #F1F5F9;
+  color: #475569;
+}
+.gl-comp-card.gl-good .gl-label {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+/* ---- METRIC PILL (used in testimonials) ---- */
+.gl-metric-pill {
+  margin-top: 16px;
+  padding: 10px 12px;
+  background: #f0fdf4;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #15803d;
+  font-weight: 600;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.gl-metric-pill strong {
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+/* ---- BADGE ---- */
+.gl-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+.gl-badge-brand { background: #f0fdf4; color: #16a34a; }
+.gl-badge-dark { background: #F1F5F9; color: #475569; }

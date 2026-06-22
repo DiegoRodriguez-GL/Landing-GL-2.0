@@ -1,0 +1,87 @@
+---
+
+---
+
+<section id="contacto" class="relative overflow-hidden" style="background: #030712;">
+  <!-- Green fade at bottom -->
+  <div class="absolute inset-0" style="background: linear-gradient(to bottom, #030712 0%, #030712 60%, rgba(22, 163, 74, 0.15) 100%);"></div>
+
+  <!-- Subtle grid pattern -->
+  <div class="absolute inset-0 opacity-[0.03]">
+    <svg width="100%" height="100%">
+      <defs>
+        <pattern id="cta-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#cta-grid)"/>
+    </svg>
+  </div>
+
+  <div class="container-custom section-padding relative z-10">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-sm font-mono tracking-wide uppercase mb-4" style="color: #22c55e;">
+        Da el primer paso
+      </p>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+        ¿Listo para proteger tu dinero y clientes?
+      </h2>
+      <p class="text-lg text-dark-300 mb-10 max-w-xl mx-auto leading-relaxed">
+        Solicita una auditoría de seguridad y descubre el estado real de tu infraestructura. Respuesta en menos de 2 horas.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+        <a
+          href="https://wa.me/34682790545?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20una%20auditor%C3%ADa%20de%20seguridad%20para%20mi%20empresa%20[REF:WEB-CTA]"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cta-btn-green inline-flex items-center justify-center px-8 py-4 rounded-none text-white font-semibold text-lg transition-all"
+        >
+          Solicitar auditoría
+        </a>
+        <a
+          href="https://wa.me/34682790545?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20una%20consulta%20gratuita%20[REF:WEB-CTA2]"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center px-8 py-4 rounded-none border-2 border-dark-400 text-dark-200 font-semibold hover:bg-white hover:text-dark-900 transition-colors"
+        >
+          Consulta gratuita
+        </a>
+      </div>
+
+      <p class="text-sm text-dark-500">
+        O contáctanos:
+        <a href="tel:+34682790545" class="cta-email-link transition-colors font-medium">
+          +34 682 790 545
+        </a>
+        ·
+        <a href="mailto:info@greenlock.tech" class="cta-email-link transition-colors font-medium">
+          info@greenlock.tech
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-btn-green {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border: none;
+    color: #fff;
+  }
+  .cta-btn-green:hover {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    transform: translateY(-1px);
+  }
+  .cta-btn-green:active {
+    background: #15803d;
+    transform: translateY(0);
+  }
+
+  .cta-email-link {
+    color: #22c55e;
+  }
+  .cta-email-link:hover {
+    color: #16a34a;
+  }
+</style>

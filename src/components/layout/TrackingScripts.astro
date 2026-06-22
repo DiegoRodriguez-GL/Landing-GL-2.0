@@ -1,0 +1,33 @@
+---
+/**
+ * Shared tracking scripts used by both BaseLayout and LandingLayout.
+ * Includes: GTM noscript iframe, WhatsApp click tracking.
+ * Place at the start/end of <body>.
+ */
+
+const gtmId = import.meta.env.PUBLIC_GTM_ID || '';
+---
+
+{gtmId && (
+  <noscript>
+    <iframe src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`} height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+)}
+
+<!-- WhatsApp click tracking → dataLayer -->
+<script is:inline>
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href*="wa.me"]');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    var refMatch = href.match(/\[REF:([\w-]+)\]/);
+    var ref = refMatch ? refMatch[1] : 'unknown';
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'whatsapp_click',
+      whatsapp_ref: ref,
+      whatsapp_url: href,
+      page_location: window.location.pathname
+    });
+  });
+</script>

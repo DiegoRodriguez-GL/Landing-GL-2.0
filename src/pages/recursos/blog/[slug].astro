@@ -1,0 +1,291 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { BLOG_POSTS, getPost, getRelatedPosts } from '@data/blog-posts';
+
+export function getStaticPaths() {
+  return BLOG_POSTS.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = getPost(slug!);
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const bodyHtml = post.body;
+
+// Table of contents from the H2 ids already present in the body
+const toc: { id: string; text: string }[] = [];
+const h2Re = /<h2 id="([^"]+)">(.*?)<\/h2>/g;
+let match: RegExpExecArray | null;
+while ((match = h2Re.exec(bodyHtml)) !== null) {
+  toc.push({ id: match[1], text: match[2].replace(/<[^>]+>/g, '') });
+}
+
+const related = getRelatedPosts(slug!, 2);
+const author = post.author;
+
+const formattedDate = new Date(post.publishedAt).toLocaleDateString('es-ES', {
+  year: 'numeric', month: 'long', day: 'numeric',
+});
+
+const blogPostingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  description: post.excerpt,
+  url: new URL(`/recursos/blog/${post.slug}`, Astro.site).href,
+  datePublished: post.publishedAt,
+  dateModified: post.publishedAt,
+  author: { '@type': 'Person', name: author.name, jobTitle: author.role },
+  publisher: {
+    '@type': 'Organization',
+    '@id': 'https://greenlock.tech/#organization',
+    name: 'GreenLock Cybersecurity',
+    url: 'https://greenlock.tech',
+    logo: { '@type': 'ImageObject', url: 'https://greenlock.tech/images/icons/Logo.svg' },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': new URL(`/recursos/blog/${post.slug}`, Astro.site).href },
+  inLanguage: 'es',
+  isPartOf: { '@type': 'Blog', name: 'GreenLock Blog', url: 'https://greenlock.tech/recursos/blog' },
+  articleSection: post.category,
+  keywords: post.tags.join(', '),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://greenlock.tech/' },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://greenlock.tech/recursos/blog' },
+    { '@type': 'ListItem', position: 3, name: post.title },
+  ],
+};
+---
+
+<BaseLayout
+  title={post.title}
+  description={post.excerpt}
+  ogType="article"
+  publishedTime={post.publishedAt}
+  modifiedTime={post.publishedAt}
+  author={author.name}
+  articleSection={post.category}
+  schemas={[blogPostingSchema, breadcrumbSchema]}
+>
+  <article class="bp">
+    <div class="container-custom" style="padding-top: 1rem; padding-bottom: 4rem;">
+
+      <!-- Breadcrumb -->
+      <nav class="bp-breadcrumb" aria-label="Migas de pan">
+        <a href="/">Inicio</a>
+        <span class="bp-bc-sep" aria-hidden="true">›</span>
+        <a href="/recursos/blog">Blog</a>
+        <span class="bp-bc-sep" aria-hidden="true">›</span>
+        <span class="bp-bc-current">{post.title}</span>
+      </nav>
+
+      <!-- Centered header -->
+      <header class="bp-header">
+        <div class="bp-cats">
+          <a href="/recursos/blog" class="bp-cat-pill">Blog</a>
+          <span class="bp-cat-pill">{post.category}</span>
+        </div>
+        <h1 class="bp-title">{post.title}</h1>
+        <p class="bp-excerpt">{post.excerpt}</p>
+        <div class="bp-meta">
+          <div class="bp-meta-avatar-fallback"><span>{author.initials}</span></div>
+          <span class="bp-meta-name">{author.name}</span>
+          <span class="bp-meta-sep">|</span>
+          <span class="bp-meta-info">{post.readTime} de lectura</span>
+          <span class="bp-meta-sep">|</span>
+          <span class="bp-meta-info">Última actualización {formattedDate}</span>
+        </div>
+      </header>
+
+      <!-- Featured image -->
+      <div class="bp-featured-img">
+        {post.image ? (
+          <Image src={post.image} alt={post.title} width={800} height={450} loading="eager" />
+        ) : post.imageUrl ? (
+          <img src={post.imageUrl} alt={post.title} width="800" height="450" loading="eager" decoding="async" />
+        ) : null}
+      </div>
+
+      <!-- Two-column layout: TOC + body -->
+      <div class="bp-layout">
+        {toc.length > 0 && (
+          <aside class="bp-toc">
+            <nav class="bp-toc-inner">
+              <h2 class="bp-toc-title">Contenidos</h2>
+              <ul class="bp-toc-list">
+                {toc.map((item) => (
+                  <li><a href={`#${item.id}`} class="bp-toc-link">{item.text}</a></li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+        )}
+
+        <div class:list={['bp-body', { 'bp-body--full': toc.length === 0 }]}>
+          <div class="prose prose-lg prose-green max-w-none" style="text-align: justify;" set:html={bodyHtml} />
+
+          <!-- Tags -->
+          {post.tags.length > 0 && (
+            <div class="bp-tags">
+              {post.tags.map((tag) => <span class="bp-tag">#{tag}</span>)}
+            </div>
+          )}
+
+          <!-- Author box -->
+          <div class="bp-author-box">
+            <div class="bp-author-img-fallback"><span>{author.initials}</span></div>
+            <div>
+              <p class="bp-author-name">{author.name}</p>
+              <p class="bp-author-role">{author.role}</p>
+              {author.certifications && author.certifications.length > 0 && (
+                <div class="bp-author-certs">
+                  {author.certifications.map((cert) => (
+                    <span class="bp-cert">
+                      {cert.icon && <img src={cert.icon.src} alt={cert.label} class="bp-cert-icon" loading="lazy" />}
+                      {cert.label}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <div class="bp-author-links">
+                {author.linkedin && (
+                  <a href={author.linkedin} target="_blank" rel="noopener noreferrer" class="bp-author-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                  </a>
+                )}
+                {author.youtube && (
+                  <a href={author.youtube} target="_blank" rel="noopener noreferrer" class="bp-author-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    YouTube
+                  </a>
+                )}
+                {author.instagram && (
+                  <a href={author.instagram} target="_blank" rel="noopener noreferrer" class="bp-author-link">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    Instagram
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related posts -->
+      {related.length > 0 && (
+        <div class="bp-related">
+          <h2 class="bp-related-title">Artículos relacionados</h2>
+          <div class="bp-related-grid">
+            {related.map((r) => (
+              <a href={`/recursos/blog/${r.slug}`} class="bp-related-card">
+                <span class="bp-related-cat">{r.category}</span>
+                <h3 class="bp-related-name">{r.title}</h3>
+                <p class="bp-related-excerpt">{r.excerpt}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  function initToc() {
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.bp-toc-link'));
+    if (!links.length) return;
+    const map = new Map<string, HTMLAnchorElement>();
+    links.forEach((l) => { const id = l.getAttribute('href')?.slice(1); if (id) map.set(id, l); });
+    const headings = links
+      .map((l) => document.getElementById(l.getAttribute('href')!.slice(1)))
+      .filter((el): el is HTMLElement => !!el);
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          links.forEach((l) => l.classList.remove('bp-toc-link--active'));
+          map.get(entry.target.id)?.classList.add('bp-toc-link--active');
+        }
+      });
+    }, { rootMargin: '-100px 0px -70% 0px' });
+    headings.forEach((h) => obs.observe(h));
+  }
+  initToc();
+  document.addEventListener('astro:after-swap', initToc);
+</script>
+
+<style>
+  .bp-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; color: #6b7280; margin-bottom: 24px; }
+  .bp-breadcrumb a { color: #6b7280; text-decoration: none; transition: color .2s; }
+  .bp-breadcrumb a:hover { color: #16a34a; }
+  .bp-bc-sep { color: #d1d5db; }
+  .bp-bc-current { color: #111827; font-weight: 600; }
+
+  .bp-header { text-align: center; max-width: 720px; margin: 0 auto 40px; }
+  .bp-cats { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; }
+  .bp-cat-pill { display: inline-flex; padding: 4px 16px; border-radius: 6px; border: 1px solid #d1d5db; color: #374151; font-size: 13px; font-weight: 500; text-decoration: none; transition: border-color .2s; }
+  .bp-cat-pill:hover { border-color: #22c55e; }
+  .bp-title { font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; color: #111827; line-height: 1.2; margin-bottom: 16px; }
+  .bp-excerpt { font-size: 17px; line-height: 1.65; color: #6b7280; margin-bottom: 24px; }
+  .bp-meta { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; font-size: 14px; color: #6b7280; }
+  .bp-meta-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+  .bp-meta-avatar-fallback { width: 32px; height: 32px; border-radius: 50%; background: #dcfce7; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #15803d; }
+  .bp-meta-name { font-weight: 600; color: #111827; }
+  .bp-meta-sep { color: #d1d5db; }
+  .bp-featured-img { margin-bottom: 48px; border-radius: 12px; overflow: hidden; }
+  .bp-featured-img img { width: 100%; height: auto; display: block; }
+  .bp-layout { display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: start; }
+  .bp-toc { position: sticky; top: 100px; }
+  .bp-toc-inner { padding-right: 16px; }
+  .bp-toc-title { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; }
+  .bp-toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+  .bp-toc-link { display: block; padding: 6px 0 6px 12px; font-size: 13px; line-height: 1.5; color: #6b7280; text-decoration: none; border-left: 2px solid transparent; transition: all .2s; }
+  .bp-toc-link:hover { color: #111827; }
+  .bp-toc-link--active { color: #15803d; border-left-color: #22c55e; font-weight: 600; }
+  .bp-body { min-width: 0; }
+  .bp-body--full { grid-column: 1 / -1; }
+  .bp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 40px; padding-top: 24px; border-top: 1px solid #e5e7eb; }
+  .bp-tag { padding: 4px 12px; border-radius: 6px; background: #f3f4f6; color: #4b5563; font-size: 13px; }
+  .bp-author-box { display: flex; align-items: center; gap: 20px; margin-top: 40px; padding: 24px 0; }
+  .bp-author-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; object-position: top; flex-shrink: 0; }
+  .bp-author-img-fallback { width: 80px; height: 80px; border-radius: 50%; background: #dcfce7; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: #15803d; flex-shrink: 0; }
+  .bp-author-name { font-weight: 700; color: #111827; font-size: 17px; }
+  .bp-author-role { font-size: 13px; color: #22c55e; margin-bottom: 8px; }
+  .bp-author-certs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .bp-cert { display: inline-flex; align-items: center; gap: 5px; padding: 2px 0; color: #374151; font-size: 13px; font-weight: 600; }
+  .bp-cert-icon { width: 16px; height: 16px; object-fit: contain; border-radius: 3px; }
+  .bp-author-links { display: flex; gap: 16px; }
+  .bp-author-link { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: #6b7280; text-decoration: none; transition: color .2s; }
+  .bp-author-link:hover { color: #22c55e; }
+  .bp-related { margin-top: 64px; padding-top: 40px; border-top: 1px solid #e5e7eb; }
+  .bp-related-title { font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 24px; }
+  .bp-related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .bp-related-card { display: block; padding: 20px; border-radius: 12px; border: 1px solid #e5e7eb; text-decoration: none; transition: border-color .3s, box-shadow .3s; }
+  .bp-related-card:hover { border-color: #22c55e; box-shadow: 0 4px 16px #0000000f; }
+  .bp-related-cat { display: inline-flex; padding: 2px 10px; border-radius: 6px; background: #f0fdf4; color: #111827; border: 1px solid #22c55e; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+  .bp-related-name { font-size: 15px; font-weight: 700; color: #111827; line-height: 1.4; margin-bottom: 6px; transition: color .2s; }
+  .bp-related-card:hover .bp-related-name { color: #16a34a; }
+  .bp-related-excerpt { font-size: 13px; color: #6b7280; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  @media (max-width: 900px) {
+    .bp-layout { grid-template-columns: 1fr; gap: 0; }
+    .bp-toc { position: relative; top: 0; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e5e7eb; }
+    .bp-toc-inner { padding-right: 0; }
+  }
+  @media (max-width: 640px) {
+    .bp-related-grid { grid-template-columns: 1fr; }
+    .bp-author-box { flex-direction: column; align-items: center; text-align: center; }
+    .bp-author-certs { justify-content: center; }
+    .bp-meta { flex-direction: column; gap: 4px; }
+    .bp-meta-sep { display: none; }
+  }
+</style>

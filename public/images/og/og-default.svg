@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#022C22"/>
+      <stop offset="100%" style="stop-color:#0A0A0A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#059669"/>
+      <stop offset="100%" style="stop-color:#10B981"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Grid pattern -->
+  <g opacity="0.06">
+    <line x1="0" y1="0" x2="0" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="60" y1="0" x2="60" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="120" y1="0" x2="120" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="180" y1="0" x2="180" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="240" y1="0" x2="240" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="360" y1="0" x2="360" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="420" y1="0" x2="420" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="480" y1="0" x2="480" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="540" y1="0" x2="540" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="660" y1="0" x2="660" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="720" y1="0" x2="720" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="780" y1="0" x2="780" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="840" y1="0" x2="840" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="960" y1="0" x2="960" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="1020" y1="0" x2="1020" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="1080" y1="0" x2="1080" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="1140" y1="0" x2="1140" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="1200" y1="0" x2="1200" y2="630" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="0" x2="1200" y2="0" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="60" x2="1200" y2="60" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="120" x2="1200" y2="120" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="180" x2="1200" y2="180" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="240" x2="1200" y2="240" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="300" x2="1200" y2="300" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="360" x2="1200" y2="360" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="420" x2="1200" y2="420" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="480" x2="1200" y2="480" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="540" x2="1200" y2="540" stroke="#059669" stroke-width="1"/>
+    <line x1="0" y1="600" x2="1200" y2="600" stroke="#059669" stroke-width="1"/>
+  </g>
+  <!-- Decorative shield icon -->
+  <g transform="translate(880, 140)" opacity="0.12">
+    <path d="M100 0L200 50V140C200 220 150 280 100 300C50 280 0 220 0 140V50L100 0Z" fill="#059669"/>
+    <path d="M100 30L170 65V140C170 200 135 250 100 268C65 250 30 200 30 140V65L100 30Z" fill="none" stroke="#10B981" stroke-width="3"/>
+    <path d="M75 145L95 165L135 120" fill="none" stroke="#10B981" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Brand accent bar -->
+  <rect x="80" y="190" width="60" height="4" rx="2" fill="url(#accent)"/>
+  <!-- Company name -->
+  <text x="80" y="250" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="56" font-weight="800" fill="#FFFFFF" letter-spacing="-0.02em">GreenLock</text>
+  <!-- Subtitle -->
+  <text x="80" y="310" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="28" font-weight="400" fill="#9CA3AF">Cybersecurity</text>
+  <!-- Tagline -->
+  <text x="80" y="390" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="22" font-weight="500" fill="#059669">Seguridad ofensiva certificada para empresas</text>
+  <!-- Certifications -->
+  <g transform="translate(80, 440)">
+    <rect width="72" height="32" rx="6" fill="#059669" opacity="0.15"/>
+    <text x="36" y="21" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#059669" text-anchor="middle">CRTO</text>
+    <rect x="84" width="72" height="32" rx="6" fill="#059669" opacity="0.15"/>
+    <text x="120" y="21" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#059669" text-anchor="middle">BSCP</text>
+    <rect x="168" width="64" height="32" rx="6" fill="#059669" opacity="0.15"/>
+    <text x="200" y="21" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#059669" text-anchor="middle">eJPT</text>
+  </g>
+  <!-- URL at bottom -->
+  <text x="80" y="560" font-family="JetBrains Mono, monospace" font-size="16" font-weight="400" fill="#6B7280">greenlock.tech</text>
+  <!-- Bottom accent line -->
+  <rect x="0" y="622" width="1200" height="8" fill="url(#accent)"/>
+</svg>

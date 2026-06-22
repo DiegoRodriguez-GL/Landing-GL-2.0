@@ -1,0 +1,419 @@
+---
+const testimonials = [
+  {
+    quote: 'Tras trabajar con el equipo de GreenLock, lo que más destacaría es la <strong>cercanía en el trato</strong>, la implicación que tuvieron durante todo el proceso y la claridad con la que nos transmitieron tanto los avances como el informe. Un equipo <strong>muy serio y profesional</strong> con los que recomendamos trabajar.',
+    quotePlain: 'Tras trabajar con el equipo de GreenLock, lo que más destacaría es la cercanía en el trato, la implicación que tuvieron durante todo el proceso y la claridad con la que nos transmitieron tanto los avances como el informe. Un equipo muy serio y profesional con los que recomendamos trabajar.',
+    name: 'Víctor Peinado',
+    role: 'Director de IT',
+    company: 'Recambios del Olmo',
+    logo: '/images/clients/olmo.png',
+    anonymous: false,
+  },
+  {
+    quote: 'Lo que primero me sorprendió de GreenLock fue su <strong>capacidad de prevenir situaciones</strong>. Son la nueva generación de ciberexpertos que controlan el medio, los nuevos ataques y, por su capacidad, deberían tener sedes en todo el mundo. Juventud y talento son las dos grandes virtudes de estos grandes profesionales. Mi experiencia en el análisis con fuentes abiertas ha sido <strong>abrumadora y espectacular</strong>, tanto, que estoy recomendando a mis clientes y partners que los conozcan y, una vez dada la oportunidad, estoy seguro de que no se separarán de ellos.',
+    quotePlain: 'Lo que primero me sorprendió de GreenLock fue su capacidad de prevenir situaciones. Son la nueva generación de ciberexpertos que controlan el medio, los nuevos ataques y, por su capacidad, deberían tener sedes en todo el mundo. Juventud y talento son las dos grandes virtudes de estos grandes profesionales. Mi experiencia en el análisis con fuentes abiertas ha sido abrumadora y espectacular, tanto, que estoy recomendando a mis clientes y partners que los conozcan y, una vez dada la oportunidad, estoy seguro de que no se separarán de ellos.',
+    name: 'Rafael Gimeno',
+    role: 'CEO',
+    company: 'Uneon · Despacho de abogados (Derecho Informático)',
+    logo: '/images/clients/uneon.png',
+    anonymous: false,
+    long: true,
+  },
+  {
+    quote: 'Hemos trabajado con Damián y Diego en más de una ocasión y, en todos los casos, me ha sorprendido gratamente la <strong>calidad y profesionalidad</strong> no sólo del trabajo realizado, sino del informe presentado y la eficiencia en la ejecución. <strong>Totalmente recomendables</strong>.',
+    quotePlain: 'Hemos trabajado con Damián y Diego en más de una ocasión y, en todos los casos, me ha sorprendido gratamente la calidad y profesionalidad no sólo del trabajo realizado, sino del informe presentado y la eficiencia en la ejecución. Totalmente recomendables.',
+    name: 'Oscar Valente',
+    role: 'CEO',
+    company: 'MyTaskPanel Consulting',
+    logo: '/images/clients/MyTaskPanelConsulting_BN.png',
+    anonymous: false,
+  },
+  {
+    quote: 'El equipo de GreenLock identificó <strong>vulnerabilidades de las que nuestro equipo no era consciente</strong>. Su informe fue claro, accionable y nos permitió priorizar las correcciones de forma eficiente. Ahora trabajamos con ellos de forma recurrente para garantizar que nuestra superficie está segura.',
+    quotePlain: 'El equipo de GreenLock identificó vulnerabilidades de las que nuestro equipo no era consciente. Su informe fue claro, accionable y nos permitió priorizar las correcciones de forma eficiente. Ahora trabajamos con ellos de forma recurrente para garantizar que nuestra superficie está segura.',
+    name: 'Directivo y socio',
+    role: '',
+    company: 'Plataforma E-commerce y proveedores B2B · España',
+    logo: null,
+    anonymous: true,
+  },
+];
+
+const reviewSchemas = testimonials.map((t) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Review',
+  reviewBody: t.quotePlain,
+  author: { '@type': 'Person', name: t.name },
+  itemReviewed: {
+    '@type': 'ProfessionalService',
+    name: 'GreenLock Cybersecurity',
+    '@id': 'https://greenlock.tech/#organization',
+  },
+  reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+}));
+---
+
+<section id="casos" class="bg-white">
+  {reviewSchemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+  <div class="container-custom section-padding">
+
+    <div class="tst-header">
+      <h2 class="tst-title">
+        Nuestros clientes <span style="color: #22c55e;">hablan por nosotros.</span>
+      </h2>
+      <p class="tst-subtitle">Empresas reales que confían en GreenLock para proteger su negocio.</p>
+    </div>
+
+    <div class="tst-carousel">
+      <button class="tst-arrow tst-arrow--prev" type="button" aria-label="Reseñas anteriores">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="tst-viewport">
+        <div class="tst-track">
+          {testimonials.map((t) => (
+        <article class="tst-card">
+          <!-- 5 stars -->
+          <div class="tst-stars" aria-label="Valoración 5 sobre 5 estrellas">
+            {[0,1,2,3,4].map(() => (
+              <svg class="tst-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l2.99 6.06L21.5 9.27l-4.75 4.63L17.99 21 12 17.77 6.01 21l1.24-7.1L2.5 9.27l6.51-1.21L12 2z"/>
+              </svg>
+            ))}
+          </div>
+
+          <!-- Decorative quote mark -->
+          <svg class="tst-quote-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M7.17 6C4.32 6 2 8.32 2 11.17V18h6.83v-6.83H5.17C5.17 9.42 6.42 8.17 7.17 8.17V6zm10 0c-2.85 0-5.17 2.32-5.17 5.17V18H18.83v-6.83h-3.66C15.17 9.42 16.42 8.17 17.17 8.17V6z"/>
+          </svg>
+
+          <!-- Quote -->
+          <blockquote class:list={['tst-quote', { 'tst-quote--clamp': t.long }]} set:html={t.quote}></blockquote>
+          {t.long && <button class="tst-readmore" type="button" aria-expanded="false">Leer más</button>}
+
+          <!-- Author block -->
+          <div class="tst-author">
+            <div class:list={['tst-avatar', { 'tst-avatar--logo': !t.anonymous }]}>
+              {t.anonymous ? (
+                <svg class="tst-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16 14a4 4 0 10-8 0M12 11a3 3 0 100-6 3 3 0 000 6zm0 11a10 10 0 100-20 10 10 0 000 20z"/>
+                </svg>
+              ) : (
+                <img src={t.logo} alt={`${t.company} logo`} class="tst-logo-img" loading="lazy" decoding="async" />
+              )}
+            </div>
+            <div class="tst-author-text">
+              <p class="tst-author-name">{t.name}</p>
+              {t.role && <p class="tst-author-role">{t.role}{t.company ? `, ${t.company}` : ''}</p>}
+              {!t.role && <p class="tst-author-role">{t.company}</p>}
+            </div>
+          </div>
+        </article>
+          ))}
+        </div>
+      </div>
+
+      <button class="tst-arrow tst-arrow--next" type="button" aria-label="Más reseñas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function initReadMore() {
+    document.querySelectorAll<HTMLButtonElement>('.tst-readmore').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const quote = btn.previousElementSibling;
+        if (!quote) return;
+        const expanded = quote.classList.toggle('is-expanded');
+        btn.textContent = expanded ? 'Leer menos' : 'Leer más';
+        btn.setAttribute('aria-expanded', String(expanded));
+      });
+    });
+  }
+  function initCarousel() {
+    const track = document.querySelector<HTMLElement>('.tst-track');
+    const cards = track ? Array.from(track.querySelectorAll<HTMLElement>('.tst-card')) : [];
+    const prev = document.querySelector<HTMLButtonElement>('.tst-arrow--prev');
+    const next = document.querySelector<HTMLButtonElement>('.tst-arrow--next');
+    if (!track || cards.length === 0) return;
+    let index = 0;
+
+    function visibleCount() {
+      if (window.matchMedia('(max-width: 767px)').matches) return 1;
+      if (window.matchMedia('(max-width: 1023px)').matches) return 2;
+      return 3;
+    }
+
+    function update() {
+      const vis = visibleCount();
+      const maxIndex = Math.max(0, cards.length - vis);
+      if (index > maxIndex) index = maxIndex;
+      if (index < 0) index = 0;
+      const gap = parseFloat(getComputedStyle(track!).columnGap || '0') || 0;
+      const step = cards[0].getBoundingClientRect().width + gap;
+      track!.style.transform = 'translateX(' + (-index * step) + 'px)';
+      const enough = cards.length > vis;
+      if (prev) prev.style.display = (enough && index > 0) ? '' : 'none';
+      if (next) next.style.display = (enough && index < maxIndex) ? '' : 'none';
+    }
+
+    prev?.addEventListener('click', () => { index -= 1; update(); });
+    next?.addEventListener('click', () => { index += 1; update(); });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  function initTestimonials() {
+    initReadMore();
+    initCarousel();
+  }
+  initTestimonials();
+  document.addEventListener('astro:after-swap', initTestimonials);
+</script>
+
+<style>
+  .tst-header {
+    margin-bottom: 56px;
+    text-align: center;
+  }
+
+  .tst-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 12px;
+    line-height: 1.15;
+  }
+
+  .tst-subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #6b7280;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .tst-carousel {
+    position: relative;
+  }
+
+  .tst-viewport {
+    overflow: hidden;
+  }
+
+  .tst-track {
+    display: flex;
+    gap: 28px;
+    transition: transform 0.45s ease;
+    will-change: transform;
+  }
+
+  .tst-card {
+    flex: 0 0 calc((100% - 56px) / 3);
+  }
+
+  .tst-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 14px -6px rgba(15, 23, 42, 0.25);
+    transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tst-arrow--prev { left: -20px; }
+  .tst-arrow--next { right: -20px; }
+
+  .tst-arrow:hover:not(:disabled) {
+    border-color: #22c55e;
+    color: #16a34a;
+    box-shadow: 0 8px 20px -8px rgba(34, 197, 94, 0.45);
+  }
+
+  .tst-arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .tst-arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .tst-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0;
+    padding: 24px 22px;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .tst-card:hover {
+    border-color: #22c55e;
+    box-shadow: 0 12px 28px -16px rgba(34, 197, 94, 0.25);
+  }
+
+  .tst-stars {
+    display: flex;
+    gap: 4px;
+    color: #facc15;
+    margin-bottom: 14px;
+  }
+
+  .tst-star {
+    width: 24px;
+    height: 24px;
+  }
+
+  .tst-quote-mark {
+    width: 26px;
+    height: 26px;
+    color: #22c55e;
+    opacity: 0.35;
+    margin-bottom: 6px;
+  }
+
+  .tst-quote {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: #374151;
+    margin-bottom: 18px;
+    flex-grow: 1;
+    font-style: normal;
+  }
+
+  .tst-quote :global(strong) {
+    color: #111827;
+    font-weight: 600;
+  }
+
+  .tst-quote--clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 0;
+  }
+
+  .tst-quote--clamp.is-expanded {
+    -webkit-line-clamp: unset;
+    display: block;
+    overflow: visible;
+  }
+
+  .tst-readmore {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    color: #16a34a;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 0 16px;
+  }
+
+  .tst-readmore:hover {
+    text-decoration: underline;
+  }
+
+  .tst-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .tst-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .tst-avatar--logo {
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+    width: 56px;
+    height: 56px;
+  }
+
+  .tst-avatar-icon {
+    width: 28px;
+    height: 28px;
+    color: #9ca3af;
+  }
+
+  .tst-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .tst-author-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .tst-author-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.3;
+  }
+
+  .tst-author-role {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 1023px) {
+    .tst-track { gap: 20px; }
+    .tst-card { flex: 0 0 calc((100% - 20px) / 2); }
+  }
+
+  @media (max-width: 767px) {
+    .tst-header {
+      margin-bottom: 36px;
+    }
+    .tst-track { gap: 16px; }
+    .tst-card {
+      flex: 0 0 100%;
+      padding: 24px 20px;
+    }
+    .tst-quote {
+      font-size: 14.5px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .tst-arrow { width: 40px; height: 40px; }
+    .tst-arrow--prev { left: 4px; }
+    .tst-arrow--next { right: 4px; }
+  }
+</style>

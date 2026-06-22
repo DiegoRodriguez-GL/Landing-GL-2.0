@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import heroBg from '@assets/hero-bg.webp';
+
+const stats = [
+  { value: '4,35M€', label: 'Coste medio de una brecha de datos en Europa', highlight: true },
+  { value: '277', label: 'Días de media para detectar una brecha de seguridad', highlight: false },
+  { value: '60%', label: 'De pymes cierran en 6 meses tras un ciberataque', highlight: true },
+  { value: '31%', label: 'De empresas pierden clientes tras una brecha', highlight: false },
+];
+---
+
+<section class="relative overflow-hidden" style="background-color: #030712;">
+  <!-- Background image (same as hero) -->
+  <div class="absolute inset-0">
+    <Image src={heroBg} alt="" widths={[640, 1024, 1920]} sizes="100vw" class="absolute inset-0 w-full h-full object-cover" style="opacity: 0.3;" loading="lazy" decoding="async" />
+    <div class="absolute inset-0" style="background: rgba(3, 7, 18, 0.85);"></div>
+  </div>
+
+  <div class="relative z-10 container-custom section-padding">
+    <div class="text-center mb-12">
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] mb-4" style="color: #22c55e;">El coste de no actuar</p>
+      <h2 class="text-2xl md:text-3xl font-bold text-white">¿Quieres ser el siguiente?</h2>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      {stats.map((stat) => (
+        <div class="text-center">
+          <p class="text-4xl md:text-5xl font-bold mb-3 font-mono" style={stat.highlight ? 'color: #22c55e;' : 'color: #fff;'}>
+            {stat.value}
+          </p>
+          <p class="text-sm text-dark-400 leading-relaxed">
+            {stat.label}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
