@@ -7,9 +7,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "studio": "sanity dev",
-    "studio:build": "sanity build",
-    "studio:deploy": "sanity deploy",
     "generate:icons": "node scripts/generate-icons.mjs",
     "generate:og": "node scripts/generate-og-image.mjs",
     "generate:assets": "node scripts/generate-icons.mjs && node scripts/generate-og-image.mjs"
