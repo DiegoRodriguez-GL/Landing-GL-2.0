@@ -1,0 +1,171 @@
+---
+import { Image } from 'astro:assets';
+import estafadorImg from '@assets/estafador.png';
+import detectiveImg from '@assets/detective.png';
+import marcaImg from '@assets/marca.png';
+
+const items = [
+  {
+    title: 'Estafas y fraude online',
+    desc: 'Tiendas falsas, phishing y suplantación de identidad.',
+    icon: 'M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z',
+    img: estafadorImg,
+  },
+  {
+    title: 'Denuncias de marca',
+    desc: 'Suplantación de marca, falsificación y competencia desleal.',
+    icon: 'M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z',
+    img: marcaImg,
+  },
+  {
+    title: 'Perfilado y reputación',
+    desc: 'Atribución de cuentas anónimas y reputación online de una persona.',
+    icon: 'M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z',
+    img: detectiveImg,
+  },
+];
+
+const ctaHref =
+  'https://wa.me/34682790545?text=Hola%2C%20quiero%20contaros%20mi%20caso%20(OSINT)%20[REF:WEB-OSINT]';
+---
+
+<section id="osint" class="bg-[#f3f4f6]">
+  <div class="container-custom" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
+
+    <!-- Title + one-line intro -->
+    <div class="mb-16 max-w-3xl mx-auto text-center">
+      <p class="uppercase mb-4" style="color: #22c55e; font-size: clamp(1.25rem, 2.4vw, 1.625rem); font-weight: 700; letter-spacing: 0.04em;">
+        Investigación OSINT
+      </p>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-900 mb-5 leading-tight">
+        Detrás de cada estafa hay <span style="color: #22c55e;">una persona.</span> La encontramos.
+      </h2>
+      <p class="text-lg text-dark-500 leading-relaxed">
+        Identificamos quién está detrás de estafas, marcas falsas y cuentas anónimas, y te entregamos un informe pericial listo para denunciar.
+      </p>
+    </div>
+
+    <!-- 3 simple items -->
+    <div class="os-grid">
+      {items.map((item) => (
+        <div class="os-card">
+          {item.img ? (
+            <div class="os-logo">
+              <Image src={item.img} alt={item.title} loading="lazy" decoding="async" />
+            </div>
+          ) : (
+            <div class="os-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d={item.icon} />
+              </svg>
+            </div>
+          )}
+          <h3 class="os-title">{item.title}</h3>
+          <p class="os-desc">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA + trust line -->
+    <div class="os-foot">
+      <a href={ctaHref} target="_blank" rel="noopener noreferrer" class="os-cta">
+        Cuéntanos tu caso
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .os-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .os-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 24px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0;
+    transition: border-color 0.25s ease;
+  }
+  .os-card:hover { border-color: #22c55e; }
+
+  .os-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #f0fdf4;
+    color: #16a34a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  .os-icon svg { width: 28px; height: 28px; }
+
+  .os-logo {
+    height: 135px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .os-logo img {
+    max-height: 135px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .os-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+  }
+  .os-desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #6b7280;
+  }
+
+  .os-foot {
+    text-align: center;
+    margin-top: 48px;
+  }
+  .os-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc((100% - 48px) / 5);
+    padding: 16px 18px;
+    border-radius: 0;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .os-cta:hover {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 1023px) {
+    .os-grid { grid-template-columns: 1fr; gap: 16px; }
+    .os-cta { width: auto; }
+  }
+
+  @media (max-width: 639px) {
+    .os-logo { height: 105px; }
+    .os-logo img { max-height: 105px; }
+  }
+</style>

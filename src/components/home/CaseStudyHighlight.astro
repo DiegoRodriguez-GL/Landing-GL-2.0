@@ -89,8 +89,8 @@ const reviewSchemas = testimonials.map((t) => ({
           </svg>
 
           <!-- Quote -->
-          <blockquote class:list={['tst-quote', { 'tst-quote--clamp': t.long }]} set:html={t.quote}></blockquote>
-          {t.long && <button class="tst-readmore" type="button" aria-expanded="false">Leer más</button>}
+          <blockquote class="tst-quote" set:html={t.quote}></blockquote>
+          <button class="tst-readmore" type="button">Leer más</button>
 
           <!-- Author block -->
           <div class="tst-author">
@@ -120,19 +120,86 @@ const reviewSchemas = testimonials.map((t) => ({
     </div>
 
   </div>
+
+  <!-- Modal: reseña completa -->
+  <div class="tst-modal" id="tst-modal" hidden>
+    <div class="tst-modal-overlay" data-close></div>
+    <div class="tst-modal-box" role="dialog" aria-modal="true" aria-label="Reseña completa">
+      <button class="tst-modal-close" type="button" data-close aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div class="tst-modal-stars" aria-label="Valoración 5 sobre 5 estrellas">
+        {[0,1,2,3,4].map(() => (
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.99 6.06L21.5 9.27l-4.75 4.63L17.99 21 12 17.77 6.01 21l1.24-7.1L2.5 9.27l6.51-1.21L12 2z"/></svg>
+        ))}
+      </div>
+      <blockquote class="tst-modal-quote"></blockquote>
+      <div class="tst-modal-author">
+        <div class="tst-modal-avatar"></div>
+        <div class="tst-author-text">
+          <p class="tst-modal-name"></p>
+          <p class="tst-modal-role"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
-  function initReadMore() {
-    document.querySelectorAll<HTMLButtonElement>('.tst-readmore').forEach((btn) => {
+  // Clamp every quote to the SHORTEST review's height; show "Leer más" only
+  // on the ones that get truncated, so all cards stay the same height.
+  function applyUniformClamp() {
+    const quotes = Array.from(document.querySelectorAll<HTMLElement>('.tst-quote'));
+    if (!quotes.length) return;
+    const natural = quotes.map((q) => {
+      q.style.webkitLineClamp = '999';
+      const lh = parseFloat(getComputedStyle(q).lineHeight) || 1;
+      return Math.round(q.scrollHeight / lh);
+    });
+    const minLines = Math.min(...natural);
+    quotes.forEach((q, i) => {
+      q.style.webkitLineClamp = String(minLines);
+      const card = q.closest('.tst-card');
+      const btn = card ? card.querySelector<HTMLElement>('.tst-readmore') : null;
+      if (btn) btn.style.visibility = natural[i] > minLines ? 'visible' : 'hidden';
+    });
+  }
+
+  // "Leer más" → open a popup with the full review
+  function initModal() {
+    const modal = document.getElementById('tst-modal');
+    if (!modal) return;
+    const quoteEl = modal.querySelector<HTMLElement>('.tst-modal-quote');
+    const nameEl = modal.querySelector<HTMLElement>('.tst-modal-name');
+    const roleEl = modal.querySelector<HTMLElement>('.tst-modal-role');
+    const avatarEl = modal.querySelector<HTMLElement>('.tst-modal-avatar');
+
+    function open(card: Element) {
+      const srcQuote = card.querySelector('.tst-quote');
+      const srcAvatar = card.querySelector('.tst-avatar');
+      if (quoteEl && srcQuote) quoteEl.innerHTML = srcQuote.innerHTML;
+      if (nameEl) nameEl.textContent = card.querySelector('.tst-author-name')?.textContent || '';
+      if (roleEl) roleEl.textContent = card.querySelector('.tst-author-role')?.textContent || '';
+      if (avatarEl && srcAvatar) {
+        avatarEl.innerHTML = srcAvatar.innerHTML;
+        avatarEl.classList.toggle('tst-modal-avatar--logo', srcAvatar.classList.contains('tst-avatar--logo'));
+      }
+      modal!.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      modal!.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll<HTMLElement>('.tst-readmore').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const quote = btn.previousElementSibling;
-        if (!quote) return;
-        const expanded = quote.classList.toggle('is-expanded');
-        btn.textContent = expanded ? 'Leer menos' : 'Leer más';
-        btn.setAttribute('aria-expanded', String(expanded));
+        const card = btn.closest('.tst-card');
+        if (card) open(card);
       });
     });
+    modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   }
   function initCarousel() {
     const track = document.querySelector<HTMLElement>('.tst-track');
@@ -168,10 +235,13 @@ const reviewSchemas = testimonials.map((t) => ({
   }
 
   function initTestimonials() {
-    initReadMore();
+    applyUniformClamp();
+    initModal();
     initCarousel();
   }
   initTestimonials();
+  if ((document as any).fonts?.ready) (document as any).fonts.ready.then(applyUniformClamp);
+  window.addEventListener('resize', applyUniformClamp);
   document.addEventListener('astro:after-swap', initTestimonials);
 </script>
 
@@ -294,28 +364,17 @@ const reviewSchemas = testimonials.map((t) => ({
     font-size: 15.5px;
     line-height: 1.7;
     color: #374151;
-    margin-bottom: 18px;
-    flex-grow: 1;
+    margin-bottom: 14px;
     font-style: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
   }
 
   .tst-quote :global(strong) {
     color: #111827;
     font-weight: 600;
-  }
-
-  .tst-quote--clamp {
-    display: -webkit-box;
-    -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    flex-grow: 0;
-  }
-
-  .tst-quote--clamp.is-expanded {
-    -webkit-line-clamp: unset;
-    display: block;
-    overflow: visible;
   }
 
   .tst-readmore {
@@ -328,6 +387,7 @@ const reviewSchemas = testimonials.map((t) => ({
     cursor: pointer;
     padding: 0;
     margin: 0 0 16px;
+    visibility: hidden;
   }
 
   .tst-readmore:hover {
@@ -390,7 +450,96 @@ const reviewSchemas = testimonials.map((t) => ({
     font-size: 13px;
     color: #6b7280;
     line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
+
+  /* Modal / popup */
+  .tst-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .tst-modal[hidden] { display: none; }
+  .tst-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 7, 18, 0.6);
+    backdrop-filter: blur(2px);
+  }
+  .tst-modal-box {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 40px;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.45);
+  }
+  .tst-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: none;
+    color: #9ca3af;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+  .tst-modal-close:hover { color: #111827; }
+  .tst-modal-close svg { width: 22px; height: 22px; }
+  .tst-modal-stars {
+    display: flex;
+    gap: 4px;
+    color: #facc15;
+    margin-bottom: 18px;
+  }
+  .tst-modal-stars svg { width: 22px; height: 22px; }
+  .tst-modal-quote {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #374151;
+    margin-bottom: 26px;
+  }
+  .tst-modal-quote :global(strong) { color: #111827; font-weight: 600; }
+  .tst-modal-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .tst-modal-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .tst-modal-avatar--logo {
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+  }
+  .tst-modal-avatar :global(img) { width: 100%; height: 100%; object-fit: contain; }
+  .tst-modal-avatar :global(svg) { width: 28px; height: 28px; color: #9ca3af; }
+  .tst-modal-name { font-size: 15px; font-weight: 600; color: #111827; }
+  .tst-modal-role { font-size: 13px; color: #6b7280; }
 
   @media (max-width: 1023px) {
     .tst-track { gap: 20px; }
