@@ -42,16 +42,8 @@ const serviceSchema = {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'Compliance & Normativa',
-          description: 'Te ayudamos a cumplir NIS2, ENS, ISO 27001 y GDPR con auditorías técnicas y documentación.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Ciberseguridad 360',
-          description: 'Protección integral: desde la auditoría inicial hasta la monitorización continua de tu infraestructura.',
+          name: 'Pentesting',
+          description: 'Explotación controlada de aplicaciones web, APIs e infraestructura interna, con hallazgos priorizados y reproducibles.',
         },
       },
     ],
@@ -65,9 +57,9 @@ const serviceSchema = {
   schemas={[serviceSchema]}
 >
   <Hero />
+  <CaseStudyHighlight />
   <ServicesGrid />
   <TrustBar />
-  <CaseStudyHighlight />
   <OsintService />
   <Team />
   <BlogRecent />
