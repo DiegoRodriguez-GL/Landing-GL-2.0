@@ -20,8 +20,8 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID || '';
     var link = e.target.closest('a[href*="wa.me"]');
     if (!link) return;
     var href = link.getAttribute('href') || '';
-    var refMatch = href.match(/\[REF:([\w-]+)\]/);
-    var ref = refMatch ? refMatch[1] : 'unknown';
+    // La referencia viaja en data-ref, no en el texto del mensaje que ve el cliente.
+    var ref = link.getAttribute('data-ref') || 'unknown';
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'whatsapp_click',
