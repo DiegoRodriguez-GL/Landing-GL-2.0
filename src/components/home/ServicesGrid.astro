@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import imgPerimetral from '@assets/perimetral.webp';
 import imgRedTeam from '@assets/red-team.webp';
 import img360 from '@assets/360.webp';
+import imgContinua from '@assets/continua.webp';
 
 const services = [
   {
@@ -21,6 +22,11 @@ const services = [
     title: 'Pentesting',
     description: 'Explotación controlada de aplicaciones web, APIs e infraestructura interna. Hallazgos priorizados y reproducibles.',
     icon: img360,
+  },
+  {
+    title: 'Ciberseguridad Continua',
+    description: 'Revisamos y auditamos tus sistemas de forma continua para que estés protegido en todo momento, no solo el día de la auditoría.',
+    icon: imgContinua,
   },
 ];
 ---
@@ -60,7 +66,7 @@ const services = [
 <style>
   .svc-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     /* Tamaño base del icono; cada breakpoint lo redefine y las tarjetas que
        lo necesiten aplican su propia --svc-icon-scale encima. */
@@ -125,20 +131,19 @@ const services = [
     }
   }
 
-  /* Con tres tarjetas, dos columnas dejarían una huérfana: mantenemos las
-     tres en fila y reducimos el icono para que quepan. */
+  /* Cuatro tarjetas: en tablet van en dos filas de dos. */
   @media (min-width: 640px) and (max-width: 1023px) {
     .svc-grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
-      --svc-icon-base: 130px;
+      --svc-icon-base: 150px;
     }
     .svc-icon-area {
-      height: 170px;
+      height: 190px;
       padding: 16px 8px 12px;
     }
     .svc-content {
-      padding: 0 4px 20px;
+      padding: 0 8px 20px;
     }
   }
 </style>

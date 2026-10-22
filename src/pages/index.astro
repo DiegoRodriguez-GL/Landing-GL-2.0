@@ -8,6 +8,7 @@ import Team from '@components/home/Team.astro';
 import BlogRecent from '@components/home/BlogRecent.astro';
 import TrustBar from '@components/home/TrustBar.astro';
 import FinalCTA from '@components/home/FinalCTA.astro';
+import PartnerSection from '@components/home/PartnerSection.astro';
 
 // Service structured data for SEO
 const serviceSchema = {
@@ -46,6 +47,14 @@ const serviceSchema = {
           description: 'Explotación controlada de aplicaciones web, APIs e infraestructura interna, con hallazgos priorizados y reproducibles.',
         },
       },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Ciberseguridad Continua',
+          description: 'Revisión y auditoría continua de los sistemas del cliente para mantenerlos protegidos de forma permanente.',
+        },
+      },
     ],
   },
 };
@@ -63,5 +72,6 @@ const serviceSchema = {
   <OsintService />
   <Team />
   <BlogRecent />
+  <PartnerSection />
   <FinalCTA />
 </BaseLayout>

@@ -74,13 +74,11 @@ const navLinks = [
       <!-- CTA + Mobile Toggle -->
       <div class="flex items-center gap-3">
         <a
-          href="https://wa.me/34603358517?text=Hola%2C%20me%20gustar%C3%ADa%20solicitar%20informaci%C3%B3n%20sobre%20vuestros%20servicios%20de%20ciberseguridad" data-ref="WEB-NAV"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hidden sm:inline-flex items-center px-4 py-1.5 rounded-md font-semibold text-xs transition-all header-cta-btn"
+          href="/#partners"
+          class="hidden sm:inline-flex items-center px-6 py-2.5 rounded-none font-semibold text-sm uppercase tracking-wider transition-all header-cta-btn"
           style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); border: none; color: #fff;"
         >
-          Contáctanos
+          Hazte Partner
         </a>
 
         <!-- Hamburger button -->
@@ -135,6 +133,12 @@ const navLinks = [
         {link.label}
       </a>
     ))}
+    <a
+      href="/#partners"
+      class="block py-4 px-2 text-base font-semibold border-b border-dark-100 text-brand-600 hover:text-brand-700 transition-colors"
+    >
+      Hazte Partner
+    </a>
   </div>
 
   <!-- Mobile CTA fixed bottom -->
@@ -281,7 +285,7 @@ const navLinks = [
 <!-- Smooth scroll + offset para que las anclas no queden bajo el header fijo -->
 <style is:global>
   html { scroll-behavior: smooth; }
-  #servicios, #osint, #casos, #equipo, #blog, #contacto { scroll-margin-top: 100px; }
+  #servicios, #osint, #casos, #equipo, #blog, #partners, #contacto { scroll-margin-top: 100px; }
 </style>
 
 <style>
